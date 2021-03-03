@@ -1,5 +1,5 @@
 # Group 16
-Group Name: TEAM_NAME
+Group Name: Group 16
 
 [MVP Link](https://docs.google.com/document/d/1_WjqWjOyOFAfaJ-uEPSrsKRdiPTJNP8NNb80Qa9RvAo/edit?usp=sharing)
 
