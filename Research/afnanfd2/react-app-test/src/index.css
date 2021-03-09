@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica";
+  background: #282828;
+  color: #91d5eb;
+}
+
+h1 {
+  font-family: "Calibri";
+}
+
+.modlist {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 5rem auto;
+  display: grid;
+  gap: 5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .modlist {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.mod {
+  background: #404040;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  line-height: 60px;
+}
+.mod h2,
+.mod h4 {
+  display: inline;
+  font-weight: 700;
+}
+
+.mod p {
+  display: inline;
+}
+.mod img {
+  margin-bottom: 0.5rem;
+  float: left;
+  margin: 0 1rem 0 0;
+  border-radius: 0.4rem;
+}
