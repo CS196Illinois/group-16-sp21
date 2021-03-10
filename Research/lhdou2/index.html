@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <script src="script.js"></script>
+    <h1>Flex Box</h1>
+    <p> Container with flex-direction: column </p>
+    <!-- column-reverse makes it go backwards -->
+    <div class="container flexDirectionColumn">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p> Container with flex-direction: row </p>
+    <!-- row-reverse makes it go backwards -->
+    <!-- Flex grow on both column & row but only expands row-->
+    <div class="container flexDirectionRow">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p> Container with flex-direction: row with different flex grow </p>
+    <div class="container flexDirectionRow">
+      <div class="item item1"> Box 1 </div>
+      <div class="item item2"> Box 2 </div>
+      <div class="item item2"> Box 3 </div>
+    </div>
+
+    <p> Justify Content (use for red box not green)</p>
+
+    <p>Flex End</p>
+
+    <div class="container flexDirectionRow justifyContentFlexEnd">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p>Center</p>
+    <div class="container flexDirectionRow justifyContentCenter">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p>Space Between</p>
+    <div class="container flexDirectionRow justifyContentSpaceBetween">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p>Space Around</p>
+    <div class="container flexDirectionRow justifyContentSpaceAround">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+    <p>Space Evenly</p>
+    <div class="container flexDirectionRow justifyContentSpaceEvenly">
+      <div class="item"> Box 1 </div>
+      <div class="item"> Box 2 </div>
+      <div class="item"> Box 3 </div>
+    </div>
+
+  </body>
+</html>
