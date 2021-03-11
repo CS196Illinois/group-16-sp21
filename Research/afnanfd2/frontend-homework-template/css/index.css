@@ -20,8 +20,7 @@ a:visited {
 
 #skipbutton {
   float: left;
-  padding: 20px;
-  height: 100px;
+  height: 95px;
 }
 
 img {
@@ -44,7 +43,6 @@ div.space {
 .topBar {
   position: sticky;
   top: 0;
-  padding: 20px;
   font-size: 20px;
   background: #282828;
 }
@@ -56,36 +54,36 @@ div.space {
 
 .first {
   position: sticky;
-  padding-top: 52px;
-  top: 200px;
+  top: 160px;
 }
 
 .second {
   position: sticky;
-  top: 300px;
+  top: 200px;
 }
 
 .third {
   position: sticky;
-  top: 650px;
+  top: 525px;
 }
 
 .fourth {
   position: sticky;
-  top: 700px;
+  top: 565px;
 }
 
 .fifth {
   position: sticky;
-  top: 750px;
+  top: 605px;
 }
 
 .sixth {
   position: sticky;
-  top: 900px;
+  top: 605px;
 }
 
 #buttons {
+  padding-bottom: 20px;
   text-align: center;
   position: sticky;
   top: 796px;
@@ -97,10 +95,8 @@ button {
   color: rgb(18, 17, 75);
   padding: 10px 25px;
   text-align: center;
-  font-size: 16px;
-  margin: 30px 20px;
+  margin: 10px 20px;
   opacity: 0.8;
-  transition: 0.3s;
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
