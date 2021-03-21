@@ -20,6 +20,17 @@ app.config['MYSQL_DB'] = dbInfo['mysql_db']
 mysql = MySQL(app)
 
 
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'age': self.age
+        }
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -31,25 +42,46 @@ def index():
         cursor = mysql.connection.cursor()
 
         try:
-            cursor.execute("INSERT INTO users(username, email) VALUES (%s, %s)", (username, email))
+            cursor.execute("INSERT INTO users(username, email) VALUES ('{}', '{}')".format(username, email))
         except mysql.connection.IntegrityError:
             return render_template("index.html", errorText="Email already exists in our database.")
+        except mysql.connection.DataError:
+            return render_template("index.html", errorText="woi fak kau")
 
         mysql.connection.commit()
         cursor.close()
 
         return redirect('/users')
 
-    return render_template("index.html", errorText="")
+    return render_template("index.html")
 
 
 @app.route('/users')
-def userslist():
+def users():
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM users")
     db = cursor.fetchall()
 
     return render_template('users.html', userDetails=db)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+
+        cursor = mysql.connection.cursor()
+
+        # try:
+        cursor.execute(("SELECT * FROM users WHERE email = '{}'").format(email))
+        # except mysql.connection.IntegrityError:
+        #     return render_template("index.html", errorText="Email already exists in our database.")
+        # except mysql.connection.DataError:
+        #     return render_template("index.html", errorText="Email was too long")
+        user = cursor.fetchall()
+        return render_template('login.html', name=user[0][0])
+
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
