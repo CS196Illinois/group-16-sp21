@@ -6,6 +6,7 @@ import Item from './components/Item';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './components/Search';
+import ItemList from './components/ItemList'
 
 
 function HomeScreen({ navigation }) {
@@ -29,11 +30,6 @@ function HomeScreen({ navigation }) {
 }
 
 function BorrowScreen({ navigation }) {
-  var items = [];
-  for (let i = 0; i < 4; ++i) {
-    items.push(i);
-  }
-
   
   return (
 
@@ -41,15 +37,12 @@ function BorrowScreen({ navigation }) {
       <View>
         <Text>This is the Borrow Screen</Text>
         <View style={styles.topBar}></View>
-
         <Search></Search>
       </View>
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          {items.map((item, index) => {
-            return <Item id={index} username="BillNye123" name="Bag of Doritos" description="Description" duration="5 weeks" ></Item>
-          })}
+          <ItemList/>
         </View>
 
       </ScrollView>
@@ -72,7 +65,11 @@ function LendScreen({ navigation }) {
       <View style={styles.topBar}></View>
       <Search></Search>
 
-      
+      <ScrollView>
+        <View style={styles.itemScroll}>
+          <ItemList/>
+        </View>
+      </ScrollView>
 
       <View style={styles.bottomButtons}>
         <Button title="Borrow" style={styles.borrowButton} onPress={() => navigation.push('Borrow')} />
