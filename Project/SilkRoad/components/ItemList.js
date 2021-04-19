@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Item from './Item';
 
+// Uses props 'trade_type'
+
 export default function ItemList(props) {
     const [items, setItems] = useState([]);
 

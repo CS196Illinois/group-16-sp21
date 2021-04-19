@@ -7,7 +7,7 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
-dbInfo = yaml.load(open('.\db.yaml'), Loader=yaml.SafeLoader)
+dbInfo = yaml.load(open('db.yaml'), Loader=yaml.SafeLoader)
 app.config['MYSQL_HOST'] = dbInfo['mysql_host']
 app.config['MYSQL_USER'] = dbInfo['mysql_user']
 app.config['MYSQL_PASSWORD'] = dbInfo['mysql_password']

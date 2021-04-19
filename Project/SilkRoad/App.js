@@ -6,12 +6,13 @@ import Item from './components/Item';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './components/Search';
-import ItemList from './components/ItemList'
+import ItemList from './components/ItemList';
+import ItemAdd from './components/ItemAdd';
 
 export default function App() {
   return(
     <ItemList
-      trade_type = {"borrow"}
+      trade_type = {"lend"}
     />
   );
 }

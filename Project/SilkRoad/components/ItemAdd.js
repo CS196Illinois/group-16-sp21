@@ -4,7 +4,9 @@ import RNPickerSelect from 'react-native-picker-select';
 import CalendarPicker from 'react-native-calendar-picker';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const CategoryPicker = (props) => {
+// Uses props 'trade_type'
+
+const ItemAdd = (props) => {
     const [email, onChangeEmail] = useState("");
     const [name, onChangeName] = useState("");
     const[date, onChangeDate] = useState("");
@@ -62,7 +64,7 @@ const CategoryPicker = (props) => {
                                 name: name,
                                 category: category,
                                 date: date.format('YYYY-MM-DD'),
-                                type: props.type,
+                                type: props.trade_type,
                                 image: 'default.jpg'
                             }),
                             headers: {
@@ -77,4 +79,4 @@ const CategoryPicker = (props) => {
     );
 };
 
-export default CategoryPicker;
+export default ItemAdd;

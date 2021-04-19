@@ -1,6 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 
+// Uses props 'trade_type' (str) and 'n' (int)
+// n refers to item_id
+
 const Item = (props) => {
 
   const [summary, setSummary] = useState([]);
