@@ -83,8 +83,9 @@ def add_item():
 @ app.route('/item/count/<path>', methods=['GET'])
 def retrieve_count(path):
     cursor = mysql.connection.cursor()
-    if path == 'lends':
-        cursor.execute("SELECT item_id FROM catalogue")
+    if path == 'lend' or path == 'borrow':
+        cursor.execute(
+            "SELECT item_id FROM catalogue WHERE trade_type = %s", (path, ))
         db = cursor.fetchall()
         cursor.close()
         return jsonify(db)
@@ -95,12 +96,12 @@ def retrieve_count(path):
         return jsonify(db)
 
 
-@ app.route('/item/image/<item_id>', methods=['GET'])
-def retrieve_image(item_id):
+@ app.route('/item/image/<trade_type>/<item_id>', methods=['GET'])
+def retrieve_image(item_id, trade_type):
     if request.method == 'GET':
         cursor = mysql.connection.cursor()
         cursor.execute(
-            "SELECT image FROM catalogue WHERE (item_id = %s)", item_id)
+            "SELECT image FROM catalogue WHERE (item_id = %s) AND (trade_type = %s)", (item_id, trade_type))
         db = cursor.fetchall()
         cursor.close()
         return (
@@ -108,8 +109,8 @@ def retrieve_image(item_id):
         )
 
 
-@ app.route('/item/<item_id>', methods=['GET'])
-def retrieve_item(item_id):
+@ app.route('/item/<trade_type>/<item_id>', methods=['GET'])
+def retrieve_item(item_id, trade_type):
     if request.method == 'GET':
         cursor = mysql.connection.cursor()
         cursor.execute("""
@@ -118,7 +119,8 @@ def retrieve_item(item_id):
                 INNER JOIN categories ON catalogue.category_id = categories.category_id
                 INNER JOIN users ON catalogue.user_id = users.user_id
             WHERE catalogue.item_id = %s
-        """, item_id)
+            AND catalogue.trade_type = %s
+        """, (item_id, trade_type))
         db = cursor.fetchall()
 
     return (

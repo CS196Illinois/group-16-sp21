@@ -8,13 +8,13 @@ const Item = (props) => {
   
   // Retrieve image and then other details from database
   useEffect( () => {
-    fetch('http://127.0.0.1:5000/item/image/' + props.n)
+    fetch('http://127.0.0.1:5000/item/image/' + props.trade_type + "/" + props.n)
     .then(response => response.blob())
     .then(img => {
       setImage(URL.createObjectURL(img))
     })
 
-    fetch('http://127.0.0.1:5000/item/' + props.n)
+    fetch('http://127.0.0.1:5000/item/' + props.trade_type + "/" + props.n)
     .then(response => response.json())
     .then(data => {
       setSummary(data)
