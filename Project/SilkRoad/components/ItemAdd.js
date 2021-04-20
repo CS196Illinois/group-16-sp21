@@ -4,7 +4,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import CalendarPicker from 'react-native-calendar-picker';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-// Uses props 'trade_type'
+// Uses prop 'trade_type'
+// TODO: Eject and add an image picker
 
 const ItemAdd = (props) => {
     const [email, onChangeEmail] = useState("");

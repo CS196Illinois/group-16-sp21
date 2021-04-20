@@ -16,29 +16,26 @@ app.config['MYSQL_DB'] = dbInfo['mysql_db']
 mysql = MySQL(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def index():
-    if request.method == 'POST':
-        user = request.form
-        username = user['name']
-        email = user['email']
+    user = request.form
+    username = user['name']
+    email = user['email']
 
-        cursor = mysql.connection.cursor()
+    cursor = mysql.connection.cursor()
 
-        try:
-            cursor.execute(
-                "INSERT INTO users(username, email) VALUES ('%s', '%s')", (username, email))
-        except mysql.connection.IntegrityError:
-            return render_template("index.html", errorText="Email already exists in our database.")
-        except mysql.connection.DataError:
-            return render_template("index.html", errorText="TODO")
+    try:
+        cursor.execute(
+            "INSERT INTO users(username, email) VALUES ('%s', '%s')", (username, email))
+    except mysql.connection.IntegrityError:
+        return ("no", 404)
+    except mysql.connection.DataError:
+        return render_template("index.html", errorText="TODO")
 
-        mysql.connection.commit()
-        cursor.close()
+    mysql.connection.commit()
+    cursor.close()
 
-        return redirect('/users')
-
-    return render_template("index.html")
+    return redirect('/users')
 
 
 @app.route('/forms/add_item', methods=['POST'])
