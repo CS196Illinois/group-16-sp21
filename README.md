@@ -1,10 +1,6 @@
-# Group 16
-Group Name: Group 16
+# Backend Branch
+In this branch I'm improving the Item and ItemList components to be more flexible. It can now differentiate 'borrow' and 'lend' requests.
+ItemAdder now also exists for borrowing and lending.
 
-[MVP Link](https://docs.google.com/document/d/1_WjqWjOyOFAfaJ-uEPSrsKRdiPTJNP8NNb80Qa9RvAo/edit?usp=sharing)
-
-Team Members: afnanfd2, gkk2, jkochan3, kairh2, lhdou2
-
-Project Manager: rwuh2, yiliang6
-
-Project Description: In our experience, we have found that college students either have products that they own that they do not use often or products that they would like to use but would not like to purchase. Our solution to this issue is a mobile app that streamlines the process for college students to rent and borrow various items including textbooks and electronics. 
+I've modified the App.js layout by storing all the screen components in a seperate file, making App.js much much clearer.
+I've implemented AsyncStorage for persistent storage of user data.
