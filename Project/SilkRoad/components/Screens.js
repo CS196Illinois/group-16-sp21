@@ -18,6 +18,7 @@ function HomeScreen({ navigation }) {
         title="I want to Borrow"
         style={{
           height: 500,
+
         }}
         onPress={() => navigation.navigate('Borrow')}
       />
@@ -37,12 +38,20 @@ function BorrowScreen({ navigation }) {
       <View>
         <Text>This is the Borrow Screen</Text>
         <View style={styles.topBar}></View>
-        <Search></Search>
+          <View style = {styles.topElements}>
+            <Button title="Mail" onPress={() => navigation.push('Mail')} />
+            <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
+          </View>
+        
+
+        
+        
       </View>
+      <Search></Search>
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type = 'borrow'/>
+          <ItemList/>
         </View>
 
       </ScrollView>
@@ -53,6 +62,7 @@ function BorrowScreen({ navigation }) {
       </View>
       
     </View>
+
   );
 }
 
@@ -61,12 +71,17 @@ function LendScreen({ navigation }) {
 
     <View style={styles.container}>
       <Text>This is the Lend Screen</Text>
-      <View style={styles.topBar}></View>
+      <View style={[styles.topBar, styles.lendColor]}></View>
+      <View style = {styles.topElements}>
+        <Button title="Mail" onPress={() => navigation.push('Mail')} />
+        <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
+      </View>
+      
       <Search></Search>
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type = 'lend'/>
+          <ItemList/>
         </View>
       </ScrollView>
 
@@ -79,6 +94,27 @@ function LendScreen({ navigation }) {
 
   );
 }
+
+function MailScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text> This is the Mail Screen</Text>
+
+    </View>
+  )
+}
+
+function AddItemScreen ({navigation}) {
+  return (
+    <View style={styles.container}>
+      
+      <Text>This is the Add new Items Screen</Text>
+    </View>
+
+    
+  )
+}
+
 
 function SignInScreen({ navigation }) {
 

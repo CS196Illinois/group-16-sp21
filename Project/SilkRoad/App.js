@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import PageTemplate from './components/PageTemplate';
 import { getUsername, storeUsername, logOff } from './components/functions/asyncStorage';
-import { HomeScreen, BorrowScreen, LendScreen, SignInScreen } from './components/Screens';
+import { HomeScreen, BorrowScreen, LendScreen, MailScreen, AddItemScreen, SignInScreen } from './components/Screens';
 import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
@@ -35,6 +35,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Borrow" component={BorrowScreen} />
             <Stack.Screen name="Lend" component={LendScreen} />
+            <Stack.Screen name="Mail" component = {MailScreen} />
+            <Stack.Screen name='AddItem' component = {AddItemScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

@@ -18,9 +18,7 @@ const Item = (props) => {
     })
 
     fetch('http://127.0.0.1:5000/item/' + props.trade_type + "/" + props.n)
-    .then(function(result) {
-      return result;
-    })
+    .then((response => response.json()))
     .then(data => {
       setSummary(data)
     })
