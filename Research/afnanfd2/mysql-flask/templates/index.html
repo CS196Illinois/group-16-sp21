@@ -1,0 +1,22 @@
+<form method="POST" action="">
+    Name <input
+        type="text"
+        name="name"
+        pattern="^[a-zA-Z0-9][a-zA-Z0-9-_.]{3,}$"
+        title="More than 3 characters or numbers, special characters allowed: .-_"
+        required
+        /> <br>
+
+    Email <input
+        type="email"
+        name="email"
+        required
+        /> <br>
+
+    <br>
+
+    <input type="submit">
+</form>
+
+<p id="errorMessage" style="color: red"> {{errorText}} </p>
+
