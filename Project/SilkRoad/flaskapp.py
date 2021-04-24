@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
+import src.utils as utils
+from src.user import User
 import yaml
 import datetime
 
@@ -38,7 +40,36 @@ def index():
     return redirect('/users')
 
 
-@app.route('/forms/add_item', methods=['POST'])
+@app.route('/register', methods=['POST'])
+def register():
+    reg = request.form
+
+    email = reg['email']
+    first_name = reg['firstName']
+    second_name = reg['secondName']
+    password = reg['password']
+
+    user = User(email, first_name, second_name, password)
+
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute(
+            "INSERT INTO users(uuid, first_name, second_name, email, pwd) VALUES (%s, %s, %s, %s, %s)",
+            (user.uuid(), user.first_name(),
+             user.second_name(), user.email(), user.password()))
+    except mysql.connection.IntegrityError:
+        return ("no", 404)
+    except mysql.connection.DataError:
+        return render_template("index.html", errorText="TODO")
+
+    mysql.connection.commit()
+    cursor.close()
+
+    return redirect('/users')
+
+
+@ app.route('/forms/add_item', methods=['POST'])
 def add_item():
     if request.method == 'POST':
         data = request.json
