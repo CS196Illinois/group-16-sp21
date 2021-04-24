@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './Search';
 import ItemList from './ItemList';
-import { getUsername, storeUsername, logOff } from './functions/asyncStorage';
+import { getUuid, storeUuid, logOff } from './functions/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
 
 
@@ -132,8 +132,9 @@ function AddItemScreen({ navigation }) {
 
 function SignInScreen({ navigation }) {
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorText, setErrorText]= useState('');
 
   useEffect(() => {
     logOff();
@@ -142,9 +143,9 @@ function SignInScreen({ navigation }) {
   return (
     <View>
       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         placeholder="Password"
@@ -153,14 +154,34 @@ function SignInScreen({ navigation }) {
         secureTextEntry
       />
       <Button title="Sign in" onPress={() => {
-        storeUsername(username);
 
-        
-        //TODO : THIS
-
-        navigation.navigate('Login');
+        fetch('http://127.0.0.1:5000/login',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                email: email,
+                                password: password
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        }
+                    )
+                    .then(response => {
+                      if (response.status == 200) {
+                        return response.text();
+                      } else {
+                        setErrorText("Wrong email or password");
+                        throw new Error("hey");
+                      }
+                    })
+                    .then(text => {storeUuid(text); navigation.navigate('Login');})
+                    .catch(error => {console.log(errorText)})
         }} />
+        <Text>{errorText}</Text>
+        <Button title="Register" onPress={() => {navigation.navigate("Register")}}/>
     </View>
+
   );
 }
 
@@ -182,17 +203,17 @@ function RegistrationScreen({ navigation }) {
     <View>
       <TextInput
         placeholder="Email"
-        value={username}
+        value={email}
         onChangeText={setEmail}
       />
       <TextInput
         placeholder="First Name"
-        value={username}
+        value={firstName}
         onChangeText={setFirstName}
       />
       <TextInput
         placeholder="Second Name"
-        value={username}
+        value={secondName}
         onChangeText={setSecondName}
       />
       <TextInput
@@ -201,9 +222,7 @@ function RegistrationScreen({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign in" onPress={() => {
-        storeUsername(username);
-
+      <Button title="Register" onPress={() => {
         fetch('http://127.0.0.1:5000/register',
                         {
                             method: 'POST',

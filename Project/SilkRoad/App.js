@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import PageTemplate from './components/PageTemplate';
-import { getUsername, storeUsername, logOff } from './components/functions/asyncStorage';
-import { HomeScreen, BorrowScreen, LendScreen, MailScreen, AddItemScreen, SignInScreen } from './components/Screens';
+import { getUuid, storeUuid, logOff } from './components/functions/asyncStorage';
+import { HomeScreen, BorrowScreen, LendScreen, MailScreen, AddItemScreen, SignInScreen, RegistrationScreen } from './components/Screens';
 import { useEffect } from 'react';
 
 const Drawer = createDrawerNavigator();
@@ -25,23 +25,22 @@ function Main() {
 }
 
 export default function App() {
-  const [userToken, setUserToken] = useState(null);
+  const [uuid, setUuid] = useState(null);
   const [effect, setEffect] = useState(true);
 
   useEffect(() => {
-    // logOff();
-    getUsername()
+    getUuid()
     .then(result => {
         if (result != null) {
-          setUserToken(result);
+          setUuid(result);
         } else {
-          setUserToken(null);
+          setUuid(null);
         }
     }, []);
     setEffect(false);
   }, [effect]);
 
-  if (userToken != null) {
+  if (uuid != null) {
     return (
     
       <View style={styles.container}>
@@ -59,7 +58,7 @@ export default function App() {
         <NavigationContainer onStateChange = {() => {setEffect(true)}}>
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Login" component={SignInScreen} />
-            <Stack.Screen name="Register" component={PageTemplate} />
+            <Stack.Screen name="Register" component={RegistrationScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Navigator>
         </NavigationContainer>

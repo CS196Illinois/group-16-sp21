@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, jsonify, send_file
+from email_validator import validate_email, EmailNotValidError
 from flask_mysqldb import MySQL
 from flask_cors import CORS
+import uuid as uuid_lib
 import src.utils as utils
-from src.user import User
 import yaml
 import datetime
 
@@ -20,53 +21,75 @@ mysql = MySQL(app)
 
 @app.route('/login', methods=['POST'])
 def index():
-    user = request.form
-    username = user['name']
-    email = user['email']
+    if request.method == 'POST':
+        reg = request.json
 
-    cursor = mysql.connection.cursor()
+        email = reg['email']
+        password = reg['password']
 
-    try:
+        try:
+            # Validate.
+            valid = validate_email(email)
+
+            # Update with the normalized form.
+            email = valid.email
+        except EmailNotValidError:
+            return "Bad email", 400
+
+        cursor = mysql.connection.cursor()
         cursor.execute(
-            "INSERT INTO users(username, email) VALUES ('%s', '%s')", (username, email))
-    except mysql.connection.IntegrityError:
-        return ("no", 404)
-    except mysql.connection.DataError:
-        return render_template("index.html", errorText="TODO")
+            "SELECT pwd_hash, pwd_salt FROM users WHERE email = %s", (email,)
+        )
 
-    mysql.connection.commit()
-    cursor.close()
+        db = cursor.fetchall()
 
-    return redirect('/users')
+        if (not db):
+            return "No such email", 400
+
+        db = db[0]
+
+        if utils.check_str(password, db[0], db[1]):
+            cursor.execute("SELECT uuid FROM users WHERE email = %s", (email,))
+            uuid = cursor.fetchall()[0][0]
+        else:
+            return "Wrong password", 400
+
+        cursor.close()
+        return uuid, 200
 
 
 @app.route('/register', methods=['POST'])
 def register():
-    reg = request.form
+    if request.method == 'POST':
+        reg = request.json
 
-    email = reg['email']
-    first_name = reg['firstName']
-    second_name = reg['secondName']
-    password = reg['password']
+        email = reg['email']
+        first_name = reg['firstName']
+        last_name = reg['secondName']
+        password = reg['password']
 
-    user = User(email, first_name, second_name, password)
+        try:
+            # Validate.
+            valid = validate_email(email)
 
-    cursor = mysql.connection.cursor()
+            # Update with the normalized form.
+            email = valid.email
+        except EmailNotValidError:
+            print("WHAT")
+            raise ValueError('Bad email')
 
-    try:
+        pwd, pwd_salt = utils.hash_str(password)
+        print(pwd, pwd_salt)
+        cursor = mysql.connection.cursor()
+
         cursor.execute(
-            "INSERT INTO users(uuid, first_name, second_name, email, pwd) VALUES (%s, %s, %s, %s, %s)",
-            (user.uuid(), user.first_name(),
-             user.second_name(), user.email(), user.password()))
-    except mysql.connection.IntegrityError:
-        return ("no", 404)
-    except mysql.connection.DataError:
-        return render_template("index.html", errorText="TODO")
+            "INSERT INTO users(uuid, first_name, last_name, email, pwd_hash, pwd_salt) VALUES (%s, %s, %s, %s, %s, %s)",
+            (str(uuid_lib.uuid4()), first_name,
+                last_name, email, pwd, pwd_salt))
 
-    mysql.connection.commit()
-    cursor.close()
-
-    return redirect('/users')
+        mysql.connection.commit()
+        cursor.close()
+        return "ok", 200
 
 
 @ app.route('/forms/add_item', methods=['POST'])
