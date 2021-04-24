@@ -1,24 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, TouchableOpacity, Text, Alert, ScrollView, SafeAreaView, TextInput } from "react-native";
+import { View, Button, StyleSheet, TouchableOpacity, Text, Alert, ScrollView, SafeAreaView, TextInput, Image } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './Search';
 import ItemList from './ItemList';
-import { getUsername, storeUsername } from './functions/asyncStorage';
+import { getUsername, storeUsername, logOff } from './functions/asyncStorage';
+import { useEffect } from 'react/cjs/react.development';
+
 
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
   return (
     <View>
+      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
+          <Image source={require("./../assets/drawer.png")}
+                  style={{width: 50, height: 50}}/>
+      </TouchableOpacity>
       <Text>This is the Home Screen</Text>
       <Button
         title="I want to Borrow"
         style={{
           height: 500,
-
         }}
         onPress={() => navigation.navigate('Borrow')}
       />
@@ -26,6 +31,7 @@ function HomeScreen({ navigation }) {
         title="I want to Lend"
         onPress={() => navigation.navigate('Lend')}
       />
+      
     </View>
   );
 }
@@ -35,6 +41,10 @@ function BorrowScreen({ navigation }) {
   return (
 
     <View>
+      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
+          <Image source={require("./../assets/drawer.png")}
+                  style={{width: 50, height: 50}}/>
+      </TouchableOpacity>
       <View>
         <Text>This is the Borrow Screen</Text>
         <View style={styles.topBar}></View>
@@ -51,7 +61,7 @@ function BorrowScreen({ navigation }) {
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList/>
+          <ItemList trade_type={"borrow"}/>
         </View>
 
       </ScrollView>
@@ -70,6 +80,10 @@ function LendScreen({ navigation }) {
   return (
 
     <View style={styles.container}>
+      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
+          <Image source={require("./../assets/drawer.png")}
+                  style={{width: 50, height: 50}}/>
+      </TouchableOpacity>
       <Text>This is the Lend Screen</Text>
       <View style={[styles.topBar, styles.lendColor]}></View>
       <View style = {styles.topElements}>
@@ -81,7 +95,7 @@ function LendScreen({ navigation }) {
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList/>
+          <ItemList trade_type={"lend"}/>
         </View>
       </ScrollView>
 
@@ -104,7 +118,7 @@ function MailScreen({ navigation }) {
   )
 }
 
-function AddItemScreen ({navigation}) {
+function AddItemScreen({ navigation }) {
   return (
     <View style={styles.container}>
       
@@ -121,6 +135,10 @@ function SignInScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    logOff();
+  }, [])
+
   return (
     <View>
       <TextInput
@@ -136,13 +154,78 @@ function SignInScreen({ navigation }) {
       />
       <Button title="Sign in" onPress={() => {
         storeUsername(username);
+
+        
+        //TODO : THIS
+
         navigation.navigate('Login');
         }} />
     </View>
   );
 }
 
-export { HomeScreen, BorrowScreen, LendScreen, SignInScreen };
+function RegistrationScreen({ navigation }) {
+
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [secondName, setSecondName] = useState('');
+  const [password, setPassword] = useState('');
+
+  
+
+
+  useEffect(() => {
+    logOff();
+  }, [])
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Email"
+        value={username}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        placeholder="First Name"
+        value={username}
+        onChangeText={setFirstName}
+      />
+      <TextInput
+        placeholder="Second Name"
+        value={username}
+        onChangeText={setSecondName}
+      />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <Button title="Sign in" onPress={() => {
+        storeUsername(username);
+
+        fetch('http://127.0.0.1:5000/register',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                email: email,
+                                firstName: firstName,
+                                secondName: secondName,
+                                password: password
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        }
+                    ).then(response => {console.log(response)})
+
+        navigation.navigate('Login');
+        }} />
+    </View>
+  );
+}
+
+export { HomeScreen, BorrowScreen, LendScreen, SignInScreen, RegistrationScreen, MailScreen, AddItemScreen };
 
 const styles = StyleSheet.create({
   container: {
