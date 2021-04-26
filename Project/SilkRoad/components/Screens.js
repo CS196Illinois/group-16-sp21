@@ -191,6 +191,11 @@ function SignInScreen({ navigation }) {
         }} />
         <Text>{errorText}</Text>
         <Button title="Register" onPress={() => {navigation.navigate("Register")}}/>
+        <Button title="SKIP THIS" onPress={() => {
+          storeUuid("hi!");
+          navigation.navigate('Login');
+        }} />
+        <Text>{errorText}</Text>
     </View>
 
   );
