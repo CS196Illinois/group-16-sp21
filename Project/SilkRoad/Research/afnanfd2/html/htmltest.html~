@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>What The Fuck</title>
+
+		<style>
+			.reds {
+				color: red;
+			}
+		</style>
+
+	</head>
+	
+	<header id="paragraph1">
+			<p id="paragraph1">
+			did you just fucking say about me, you little bitch? I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills.
+			</p>
+	</header>
+	<hr>
+	<nav>
+		<p id="rest">Intermission</p>
+	</nav>
+	<hr>
+	<body>
+		<p id="paragraph2">Foo</p>
+		<p id="paragraph3">
+			DRINK THE BLOOD AND SMOKE THE BANANA </br>
+			YES
+		</p>
+		<hr>
+
+		<script>
+			function changeText() {
+				if (this.textContent == "Foo") {
+					this.textContent = "Bar"
+				} else {
+					this.textContent = "Foo"
+				}
+			}
+
+			document.getElementById("paragraph2").addEventListener("hover", changeText);
+		</script>
+	</body>
+</html>

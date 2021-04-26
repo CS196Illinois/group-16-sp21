@@ -37,16 +37,8 @@ function BorrowScreen({ navigation }) {
       <View>
         <Text>This is the Borrow Screen</Text>
         <View style={styles.topBar}></View>
-          <View style = {styles.topElements}>
-            <Button title="Mail" onPress={() => navigation.push('Mail')} />
-            <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
-          </View>
-        
-
-        
-        
+        <Search></Search>
       </View>
-      <Search></Search>
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -70,12 +62,7 @@ function LendScreen({ navigation }) {
 
     <View style={styles.container}>
       <Text>This is the Lend Screen</Text>
-      <View style={[styles.topBar, styles.lendColor]}></View>
-      <View style = {styles.topElements}>
-        <Button title="Mail" onPress={() => navigation.push('Mail')} />
-        <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
-      </View>
-      
+      <View style={styles.topBar}></View>
       <Search></Search>
 
       <ScrollView>
@@ -94,26 +81,6 @@ function LendScreen({ navigation }) {
   );
 }
 
-function MailScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text> This is the Mail Screen</Text>
-
-    </View>
-  )
-}
-
-function AddItemScreen ({navigation}) {
-  return (
-    <View style={styles.container}>
-      
-      <Text>This is the Add new Items Screen</Text>
-    </View>
-
-    
-  )
-}
-
 
 const Stack = createStackNavigator();
 
@@ -130,8 +97,6 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Borrow" component={BorrowScreen} />
           <Stack.Screen name="Lend" component={LendScreen} />
-          <Stack.Screen name="Mail" component = {MailScreen} />
-          <Stack.Screen name='AddItem' component = {AddItemScreen} />
         </Stack.Navigator>
       </NavigationContainer>
 
@@ -174,8 +139,6 @@ const styles = StyleSheet.create({
   topBar: {
     height: 100,
     width: '100%',
-    position: 'absolute',
-    top: 0,
     backgroundColor: '#9AC9FF',
   },
 
@@ -235,33 +198,18 @@ const styles = StyleSheet.create({
 
   borrowButton: {
     width: '100%',
-    color: 'blue',
+    backgroundColor: 'blue',
     border: '1px solid black',
   },
 
   lendButton: {
-    color: 'yellow',
+    
+    backgroundColor: 'yellow',
     border: '1px solid green',
-  },
-
-  borrowColor: {
-    backgroundColor: '#9AC9FF'
-  },
-
-  lendColor: {
-    backgroundColor: '#FFEFD7'
   },
 
   itemScroll: {
     overflow: 'scroll',
-  },
-
-  topElements: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'relative',
-    top: 0,
   }
 
 });

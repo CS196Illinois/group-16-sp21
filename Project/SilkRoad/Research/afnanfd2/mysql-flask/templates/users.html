@@ -1,0 +1,18 @@
+<table border = 1>
+    <tr>
+        <td> Username </td>
+        <td> Email </td>
+    </tr>
+    {% for user in userDetails %}
+    <tr>
+        <td> {{user[0]}}</td>
+        <td> {{user[1]}} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<button onclick="location.href='/'" type="button">
+         Return to index
+</button>

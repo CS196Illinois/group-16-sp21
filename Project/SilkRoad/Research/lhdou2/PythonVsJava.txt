@@ -1,0 +1,25 @@
+Differences between Python and Java
+
+Python is easier to read, Java is easier to debug
+
+There are a ton of libraries in Python for things such as Machine Learning and thus Python is used more commonly for machine learning. Easy for new programmers and for programmers to share code. 
+
+Python has a CLI (command interpreter) which allows them to just type 
+	3 + 2
+to receive 5
+
+For Java, you need to write a whole program in order to do this
+	public class Print5 {
+
+public static void main(String[] args) {
+System.out.println("3+2=" + (Integer.toString(3+2)));
+}
+}
+
+
+Python Classes
+Use self in order to refer back to itself
+Can refer to variables such as x.insertVarName
+Shouldn’t do this in Java because the variables are private
+
+Python dynamic typing for variables, which means the variable type does not need to be declared.

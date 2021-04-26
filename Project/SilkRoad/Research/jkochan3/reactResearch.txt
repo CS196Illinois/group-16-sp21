@@ -1,0 +1,23 @@
+React
+-open source framework for building applications
+-uses JavaScript to access APIs
+-can change appearance and behavior of UI
+-Can make classes or functions to make compomemts
+-A view is like a building block
+    -Can be used to
+        -display text
+        -display images
+        -respond to user input
+-Android development uses Kotlin or Java
+-iOS development uses Swift or Objective-C
+-Comes with Core Components
+    -Ready-to-use Native Components to help you start
+    -Common Core Components include
+        -<View>
+        -<Text>
+        -<Image>
+        -<ScrollView>
+        -<TextInput>
+    -Can nest components to create new components
+    -Can pass props to Core Components to customize them
+    
