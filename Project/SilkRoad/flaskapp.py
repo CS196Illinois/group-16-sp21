@@ -130,12 +130,47 @@ def add_item():
         return "ok", 200
 
 
-@ app.route('/item/count/<path>', methods=['GET'])
+@ app.route('/item/count/<path>/<query>', methods=['GET'])
+def retrieve_count_query(path, query):
+
+    query = "^.*" + query + ".*"
+
+    cursor = mysql.connection.cursor()
+    if path == 'lend' or path == 'borrow':
+        cursor.execute(
+            """
+                SELECT
+                    item_id
+                FROM
+                    catalogue
+                WHERE
+                    trade_type = %s
+                AND
+                    item_name REGEXP %s
+            """, (path, query))
+        db = cursor.fetchall()
+        cursor.close()
+        return jsonify(db)
+    if path == 'categories':
+        cursor.execute("SELECT * FROM categories")
+        db = cursor.fetchall()
+        cursor.close()
+        return jsonify(db)
+
+
+@ app.route('/item/count/', methods=['GET'])
 def retrieve_count(path):
     cursor = mysql.connection.cursor()
     if path == 'lend' or path == 'borrow':
         cursor.execute(
-            "SELECT item_id FROM catalogue WHERE trade_type = %s", (path, ))
+            """
+                SELECT
+                    item_id
+                FROM
+                    catalogue
+                WHERE
+                    trade_type = %s
+            """, (path,))
         db = cursor.fetchall()
         cursor.close()
         return jsonify(db)

@@ -40,6 +40,10 @@ function HomeScreen({ navigation }) {
 
 function BorrowScreen({ navigation }) {
 
+  const callbackFunction = (childData) => {
+    console.log(childData);
+  }
+
   return (
 
     <View>
@@ -59,7 +63,7 @@ function BorrowScreen({ navigation }) {
         
         
       </View>
-      <Search></Search>
+      <Search parentCallback = {callbackFunction}/>
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -94,7 +98,7 @@ function LendScreen({ navigation }) {
         <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "lend"})} />
       </View>
       
-      <Search></Search>
+      <Search/>
 
       <ScrollView>
         <View style={styles.itemScroll}>
