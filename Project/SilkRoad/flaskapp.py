@@ -158,7 +158,7 @@ def retrieve_count_query(path, query):
         return jsonify(db)
 
 
-@ app.route('/item/count/', methods=['GET'])
+@ app.route('/item/count/<path>/', methods=['GET'])
 def retrieve_count(path):
     cursor = mysql.connection.cursor()
     if path == 'lend' or path == 'borrow':

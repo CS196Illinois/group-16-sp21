@@ -8,21 +8,26 @@ export default function ItemList(props) {
     const [items, setItems] = useState([]);
 
     useEffect (() => {
-        fetch('http://127.0.0.1:5000/item/count/' + props.trade_type)
+        fetch('http://127.0.0.1:5000/item/count/' + props.trade_type + "/" + props.query)
         .then(response => response.json())
         .then(data => {
-            setItems(data)
-        })
-    }, []);
+            if (items != data) {
+                setItems(data);
+            }
+        });
+        
+    }, [props.query]);
 
     return (
-        <View>
+        <View
+            key={items}
+        >
             {items.map(i => {
                 return (
                     <Item
                     n={i}
                     trade_type = {props.trade_type}
-                    ></Item>
+                    />
                 )
             })}
         </View>

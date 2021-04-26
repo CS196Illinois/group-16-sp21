@@ -5,7 +5,7 @@ import { StyleSheet, View, Image, Text } from 'react-native';
 // n refers to item_id
 
 const Item = (props) => {
-
+  
   const [summary, setSummary] = useState([]);
   const [image, setImage] = useState(null);
   

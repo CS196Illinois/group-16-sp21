@@ -9,6 +9,7 @@ import ItemList from './ItemList';
 import { getUuid, storeUuid, logOff } from './functions/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
 import ItemAdd from './ItemAdd';
+import { Searchbar } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native'
 
 
@@ -40,9 +41,7 @@ function HomeScreen({ navigation }) {
 
 function BorrowScreen({ navigation }) {
 
-  const callbackFunction = (childData) => {
-    console.log(childData);
-  }
+  const [query, setQuery] = useState("");
 
   return (
 
@@ -59,15 +58,16 @@ function BorrowScreen({ navigation }) {
             <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "borrow"})} />
           </View>
         
-
-        
-        
       </View>
-      <Search parentCallback = {callbackFunction}/>
+      <Searchbar
+        placeholder="Search for Item"
+        onChangeText={setQuery}
+        value={query}
+      />
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type={"borrow"}/>
+          <ItemList trade_type={"borrow"} query={query}/>
         </View>
 
       </ScrollView>
@@ -84,6 +84,8 @@ function BorrowScreen({ navigation }) {
 
 function LendScreen({ navigation }) {
 
+  const [query, setQuery] = useState("");
+
   return (
 
     <View style={styles.container}>
@@ -98,11 +100,15 @@ function LendScreen({ navigation }) {
         <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "lend"})} />
       </View>
       
-      <Search/>
+      <Searchbar
+        placeholder="Search for Item"
+        onChangeText={setQuery}
+        value={query}
+      />
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type={"lend"}/>
+          <ItemList trade_type={"lend"} query={query}/>
         </View>
       </ScrollView>
 
