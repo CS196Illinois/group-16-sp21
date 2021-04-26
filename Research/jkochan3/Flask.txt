@@ -1,2 +1,0 @@
-Flask
--tried to install flask and run minimal applications

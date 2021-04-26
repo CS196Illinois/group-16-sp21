@@ -1,6 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 
+// Uses props 'trade_type' (str) and 'n' (int)
+// n refers to item_id
+
 const Item = (props) => {
 
   const [summary, setSummary] = useState([]);
@@ -8,14 +11,14 @@ const Item = (props) => {
   
   // Retrieve image and then other details from database
   useEffect( () => {
-    fetch('http://127.0.0.1:5000/item/image/' + props.n)
+    fetch('http://127.0.0.1:5000/item/image/' + props.trade_type + "/" + props.n)
     .then(response => response.blob())
     .then(img => {
-      setImage(URL.createObjectURL(img))
+        setImage(URL.createObjectURL(img));
     })
 
-    fetch('http://127.0.0.1:5000/item/' + props.n)
-    .then(response => response.json())
+    fetch('http://127.0.0.1:5000/item/' + props.trade_type + "/" + props.n)
+    .then((response => response.json()))
     .then(data => {
       setSummary(data)
     })
@@ -34,7 +37,7 @@ return (
       <Text>{summary[0]}</Text>
       <Text>Final date: {summary[1]}</Text>
       <Text>Category: {summary[2]}</Text>
-      <Text>Lender: {summary[3]}</Text>
+      <Text>{props.trade_type == "lend" ? <Text>Lender</Text> : <Text>Request by</Text>}: {summary[3]}</Text>
     </View>
   );
 }
