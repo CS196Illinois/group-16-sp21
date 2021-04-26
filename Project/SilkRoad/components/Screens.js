@@ -8,6 +8,8 @@ import Search from './Search';
 import ItemList from './ItemList';
 import { getUuid, storeUuid, logOff } from './functions/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
+import ItemAdd from './ItemAdd';
+import { useIsFocused } from '@react-navigation/native'
 
 
 const Stack = createStackNavigator();
@@ -37,7 +39,7 @@ function HomeScreen({ navigation }) {
 }
 
 function BorrowScreen({ navigation }) {
-  
+
   return (
 
     <View>
@@ -50,7 +52,7 @@ function BorrowScreen({ navigation }) {
         <View style={styles.topBar}></View>
           <View style = {styles.topElements}>
             <Button title="Mail" onPress={() => navigation.push('Mail')} />
-            <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
+            <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "borrow"})} />
           </View>
         
 
@@ -77,6 +79,7 @@ function BorrowScreen({ navigation }) {
 }
 
 function LendScreen({ navigation }) {
+
   return (
 
     <View style={styles.container}>
@@ -88,7 +91,7 @@ function LendScreen({ navigation }) {
       <View style={[styles.topBar, styles.lendColor]}></View>
       <View style = {styles.topElements}>
         <Button title="Mail" onPress={() => navigation.push('Mail')} />
-        <Button title="AddItem" onPress={() => navigation.push('AddItem')} />
+        <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "lend"})} />
       </View>
       
       <Search></Search>
@@ -118,11 +121,15 @@ function MailScreen({ navigation }) {
   )
 }
 
-function AddItemScreen({ navigation }) {
+function AddItemScreen({ navigation, route }) {
+
+  const {trade_type} = route.params;
+
   return (
     <View style={styles.container}>
       
       <Text>This is the Add new Items Screen</Text>
+      <ItemAdd trade_type={trade_type}/>
     </View>
 
     

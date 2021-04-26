@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, TextInput, Text } from 'react-native';
+import { View, Button, TextInput, Text, Image } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CalendarPicker from 'react-native-calendar-picker';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { getUuid } from './functions/asyncStorage';
+import { StackActions } from '@react-navigation/routers';
+import { createStackNavigator } from '@react-navigation/stack';
+import { withNavigation } from '@react-navigation/compat';
 
 // Uses prop 'trade_type'
 // TODO: Eject and add an image picker
 
-const ItemAdd = (props) => {
-    const [email, onChangeEmail] = useState("");
+const Stack = createStackNavigator();
+
+const ItemAdd = ( props ) => {
+    const [uuid, setUuid] = useState("");
     const [name, onChangeName] = useState("");
     const[date, onChangeDate] = useState("");
     const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("6");
 
     useEffect (() => {
         fetch('http://127.0.0.1:5000/item/count/categories')
@@ -20,16 +25,16 @@ const ItemAdd = (props) => {
         .then(data => {
             setCategories(data)
         })
+
+        getUuid()
+        .then(result => {setUuid(result);})
+
     }, []);
     
 
     return (
         <View>
-            <TextInput
-            onChangeText={onChangeEmail}
-                value={email}
-                placeholder="User email"
-            />
+
             <TextInput
             onChangeText={onChangeName}
                 value={name}
@@ -40,12 +45,19 @@ const ItemAdd = (props) => {
                 onDateChange={onChangeDate}
             />
 
+            <Image source={require("./../assets/" + category + ".png")}
+                  style={{width: 50, height: 50}}/>
+
             <RNPickerSelect
             placeholder={{
                 label: "Select a category",
                 value: "no_category_selected"
             }}
-            onValueChange={(value) => {setCategory(value)}}
+            onValueChange={(value) => {
+                if (value != "no_category_selected") {
+                    setCategory(value);
+                }
+            }}
             items={categories.map(i => (
                 {
                     label: i[1],
@@ -56,23 +68,26 @@ const ItemAdd = (props) => {
             <Button
                 title="Submit"
                 onPress={() => {
-                    console.log()
+                    console.log();
+
                     fetch('http://127.0.0.1:5000/forms/add_item',
                         {
                             method: 'POST',
                             body: JSON.stringify({
-                                email: email,
+                                uuid: uuid,
                                 name: name,
                                 category: category,
                                 date: date.format('YYYY-MM-DD'),
                                 type: props.trade_type,
-                                image: 'default.jpg'
+                                image: category + ".png"
                             }),
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                         }
                     ).then(response => {console.log(response)})
+
+                    props.navigation.dispatch(StackActions.pop(2));
                 }}
             />
         </View>
@@ -80,4 +95,4 @@ const ItemAdd = (props) => {
     );
 };
 
-export default ItemAdd;
+export default withNavigation(ItemAdd);

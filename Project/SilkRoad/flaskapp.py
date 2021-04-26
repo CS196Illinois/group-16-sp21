@@ -96,16 +96,15 @@ def register():
 def add_item():
     if request.method == 'POST':
         data = request.json
-        email = data['email']
-        print(data['email'])
-        print(type(data['email']))
+
+        uuid = data['uuid']
+        print("UUID is " + uuid)
 
         cursor = mysql.connection.cursor()
         cursor.execute(
-            "SELECT user_id FROM users WHERE (email = %s)", (email,))
-        # cursor.execute("SELECT image FROM catalogue WHERE (item_id = %s)", item_id)
+            "SELECT user_id FROM users WHERE uuid = %s", (uuid.replace('"', ''), ))
 
-        user_id = cursor.fetchall()[0][0]
+        user_id = cursor.fetchall()
         cursor.close()
 
         print(data['name'])
@@ -156,7 +155,7 @@ def retrieve_image(item_id, trade_type):
         db = cursor.fetchall()
         cursor.close()
         return (
-            send_file("items/{}".format(db[0][0]))
+            send_file("assets/{}".format(db[0][0]))
         )
 
 
