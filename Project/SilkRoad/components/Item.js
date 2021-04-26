@@ -40,7 +40,7 @@ return (
       <Text>{summary[0]}</Text>
       <Text>Final date: {summary[1]}</Text>
       <Text>Category: {summary[2]}</Text>
-      <Text>Lender: {summary[3]}</Text>
+      <Text>{props.trade_type == "lend" ? <Text>Lender</Text> : <Text>Request by</Text>}: {summary[3]}</Text>
     </View>
   );
 }
