@@ -394,8 +394,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     padding: '10%',
      
-  }
+  },
 
+  topElements: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+  },
 
 
 });
