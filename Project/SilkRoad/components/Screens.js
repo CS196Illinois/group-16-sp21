@@ -17,23 +17,31 @@ const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
   return (
-    <View>
+    <View style={styles.bodyOfBigButtons}>
       <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
           <Image source={require("./../assets/drawer.png")}
                   style={{width: 50, height: 50}}/>
       </TouchableOpacity>
-      <Text>This is the Home Screen</Text>
-      <Button
-        title="I want to Borrow"
-        style={{
-          height: 500,
-        }}
-        onPress={() => navigation.navigate('Borrow')}
-      />
-      <Button
-        title="I want to Lend"
-        onPress={() => navigation.navigate('Lend')}
-      />
+      <View style={styles.bigButtonContainer}>
+        
+        <TouchableOpacity
+          style={styles.bigButton, styles.borrowingColor}
+          onPress={() => navigation.navigate('Borrow')}
+  
+        >
+          <Text style={styles.bigButtonText}>I want to Borrow</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.bigButton, styles.lendingColor}
+          onPress={() => navigation.navigate('Borrow')}
+         
+        >
+          <Text style={styles.bigButtonText}>I want to Lend</Text>
+        </TouchableOpacity>
+
+
+      </View>  
       
     </View>
   );
@@ -94,7 +102,7 @@ function LendScreen({ navigation }) {
                   style={{width: 50, height: 50}}/>
       </TouchableOpacity>
       <Text>This is the Lend Screen</Text>
-      <View style={[styles.topBar, styles.lendColor]}></View>
+      <View style={[styles.topBar, styles.lendingColor]}></View>
       <View style = {styles.topElements}>
         <Button title="Mail" onPress={() => navigation.push('Mail')} />
         <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "lend"})} />
@@ -350,6 +358,44 @@ const styles = StyleSheet.create({
 
   itemScroll: {
     overflow: 'scroll',
+  },
+
+  bigButton: {
+    width: '10%',
+    
+  },
+
+  borrowingColor: {
+    backgroundColor: '#D2E7FF'
+  },
+
+  lendingColor: {
+    backgroundColor: '#FFEFD7'
+  },
+
+  bodyOfBigButtons: {
+   
+    display: 'flex',
+    height: '90vh',
+  },
+
+  bigButtonContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+   
+    justifyContent: 'space-around',
+    margin: '5%',
+    textAlign: 'center',
+    borderRadius: '50px',
+  },
+
+  bigButtonText: {
+    fontSize: 50,
+    padding: '10%',
+     
   }
+
+
 
 });
