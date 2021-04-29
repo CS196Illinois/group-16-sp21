@@ -1,4 +1,4 @@
-mysql_host: 'localhost'
-mysql_user: 'root'
-mysql_password: 'AzureFluke--44'
-mysql_db: 'flasktest'
+mysql_host: "cs196-silkroad.mysql.database.azure.com"
+mysql_user: "group16@cs196-silkroad"
+mysql_password: "SilkRoad--cs196"
+mysql_db: "silkroad"
