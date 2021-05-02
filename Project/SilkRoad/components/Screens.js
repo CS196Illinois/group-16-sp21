@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './Search';
 import ItemList from './ItemList';
+import TopBar from './TopBar';
 import { getUuid, storeUuid, logOff } from './functions/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
 import ItemAdd from './ItemAdd';
@@ -53,18 +54,12 @@ function BorrowScreen({ navigation }) {
 
   return (
 
-    <View>
-      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
-          <Image source={require("./../assets/drawer.png")}
-                  style={{width: 50, height: 50}}/>
-      </TouchableOpacity>
-      <View>
+    <View style={styles.container}>
     
-      <View style={styles.topBar}></View>
+      <TopBar type={"borrow"}/>
 
       <Text>Here's what people are offering:</Text>
         
-      </View>
       <Searchbar
         placeholder="Search for Item"
         onChangeText={setQuery}
@@ -82,7 +77,7 @@ function BorrowScreen({ navigation }) {
           <Text style = {styles.borrowButton}>Borrow</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
-          <Text style = {styles.addItemButton}>{"Send request"}</Text>
+          <Text style = {styles.addItemButton}>Post Request</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
           <Text style = {styles.lendButton}>Lend</Text>
@@ -101,11 +96,8 @@ function LendScreen({ navigation }) {
   return (
 
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
-          <Image source={require("./../assets/drawer.png")}
-                  style={{width: 50, height: 50}}/>
-      </TouchableOpacity>
-      <View style={[styles.topBar, styles.lendingColor]}></View>
+      
+      <TopBar type={"lend"}/>
 
       <Text>Here's what people are looking for:</Text>
 
@@ -126,7 +118,7 @@ function LendScreen({ navigation }) {
           <Text style = {styles.borrowButton}>Borrow</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
-          <Text style = {styles.addItemButton}>{"Send request"}</Text>
+          <Text style = {styles.addItemButton}>Post offer</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
           <Text style = {styles.lendButton}>Lend</Text>
@@ -183,7 +175,7 @@ function SignInScreen({ navigation }) {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          // source={require('/assets/SilkRoadDark.png')}
+          source={require('../assets/SilkRoadDark.png')}
         />
       </View>
 
@@ -338,12 +330,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  topBar: {
-    height: 100,
-    width: '100%',
-    backgroundColor: '#9AC9FF',
-  },
-
   bottomBar: {
     height: 100,
     width: '100%',
@@ -400,20 +386,20 @@ const styles = StyleSheet.create({
   },
 
   borrowButton: {
-    width: '100%',
-    backgroundColor: 'blue',
+    padding: "5px",
+    backgroundColor: '#D2E7FF',
     border: '1px solid black',
   },
 
   addItemButton: {
-    width: '100%',
-    backgroundColor: 'blue',
+    padding: "5px",
+    backgroundColor: '#9AC9FF',
     border: '1px solid black',
   },
 
   lendButton: {
-    
-    backgroundColor: 'yellow',
+    padding: "5px",
+    backgroundColor: '#FFEFD7',
     border: '1px solid green',
   },
 
