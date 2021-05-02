@@ -19,7 +19,7 @@ function Main() {
       <Stack.Screen name="Borrow" component={BorrowScreen} />
       <Stack.Screen name="Lend" component={LendScreen} />
       <Stack.Screen name="Mail" component = {MailScreen} />
-      <Stack.Screen name='AddItem' component = {AddItemScreen}  />
+      <Stack.Screen name='Post Item' component = {AddItemScreen}  />
     </Stack.Navigator>
   );
 }

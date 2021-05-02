@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, TextInput, Text, Image } from 'react-native';
+import { View, Button, TextInput, Text, Image, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CalendarPicker from 'react-native-calendar-picker';
 import { getUuid } from './functions/asyncStorage';
@@ -34,11 +34,13 @@ const ItemAdd = ( props ) => {
 
     return (
         <View>
-
             <TextInput
-            onChangeText={onChangeName}
-                value={name}
                 placeholder="Name of item"
+                placeholderTextColor="rgba(180,180,180,1)"
+                returnKeyType="next"
+                value={name}
+                onChangeText={onChangeName}
+                style={styles.input}
             />
 
             <CalendarPicker
@@ -96,3 +98,12 @@ const ItemAdd = ( props ) => {
 };
 
 export default withNavigation(ItemAdd);
+
+const styles = StyleSheet.create({
+    input: {
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,1)',
+    marginBottom: 20,
+    paddingHorizontal: 10
+  }
+});

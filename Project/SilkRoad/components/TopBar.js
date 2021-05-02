@@ -1,18 +1,33 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image} from "react-native";
 import { withNavigation } from '@react-navigation/compat';
 
 const TopBar = (props) => {
+    const [bgColor, setBgColor] = useState(null);
+    useEffect(() => {
+        switch (props.type) {
+            case "lend":
+                setBgColor(styles.lendingColor);
+                break;
+            case "borrow":
+                setBgColor(styles.borrowingColor);
+                break;
+            default:
+                setBgColor(styles.defaultColor);
+    }
+
+    }, []);
+
     return (
-        <View style={[styles.topBar, props.type == "lend" ? styles.lendingColor : styles.borrowingColor]}>
+        <View style={[styles.topBar, bgColor]}>
             <View style={styles.barContent}>
                 <TouchableOpacity
                     onPress={()=>{props.navigation.toggleDrawer()}}
                 >
                     <Image
                     source={require("./../assets/drawer.png")}
-                    style={{width: 50, height: 50}}
+                    style={{width: 35, height: 35}}
                     />
                 </TouchableOpacity>
 
@@ -20,6 +35,12 @@ const TopBar = (props) => {
                     source={require("./../assets/logo.png")}
                     style={styles.barLogo}
                 />
+
+                <Image
+                    source={require("./../assets/shh.png")}
+                    style={{width: 35, height: 35}}
+                />
+
             </View>
         </View>
         
@@ -42,8 +63,8 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems: 'center',
     justifyContent:'space-between',
-    width:'74%',
-    paddingLeft:10
+    paddingLeft:10,
+    width: "100%"
   },
 
   barLogo: {
@@ -58,5 +79,9 @@ const styles = StyleSheet.create({
   lendingColor: {
     backgroundColor: '#FFEFD7'
   },
+
+  defaultColor: {
+    backgroundColor: '#9AC9FF'
+  }
 
 });

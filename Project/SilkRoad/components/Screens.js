@@ -19,10 +19,7 @@ const Stack = createStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.bodyOfBigButtons}>
-      <TouchableOpacity onPress={()=>{navigation.toggleDrawer()}}>
-          <Image source={require("./../assets/drawer.png")}
-                  style={{width: 50, height: 50}}/>
-      </TouchableOpacity>
+      <TopBar/>
       <View style={styles.bigButtonContainer}>
         
         <TouchableOpacity
@@ -76,7 +73,7 @@ function BorrowScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.push('Borrow')}>
           <Text style = {styles.borrowButton}>Borrow</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
+        <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
           <Text style = {styles.addItemButton}>Post Request</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
@@ -117,7 +114,7 @@ function LendScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.push('Borrow')}>
           <Text style = {styles.borrowButton}>Borrow</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
+        <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
           <Text style = {styles.addItemButton}>Post offer</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
@@ -133,6 +130,7 @@ function LendScreen({ navigation }) {
 function MailScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <TopBar/>
       <Text> This is the Mail Screen</Text>
 
     </View>
@@ -145,8 +143,7 @@ function AddItemScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      
-      <Text>This is the Add new Items Screen</Text>
+      <TopBar type={trade_type == 'lend' ? 'borrow' : 'lend'}/>
       <ItemAdd trade_type={trade_type}/>
     </View>
 
@@ -187,7 +184,7 @@ function SignInScreen({ navigation }) {
           value={email}
           onChangeText={setEmail}
           style={styles.input}
-          />
+        />
         <TextInput
           placeholder="Enter password"
           secureTextEntry
@@ -196,7 +193,40 @@ function SignInScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity
+
+        <Button
+          title = "Log In"
+          onPress={() => {
+            fetch('http://127.0.0.1:5000/login',
+                            {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    email: email,
+                                    password: password
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                        )
+                        .then(response => {
+                          if (response.status == 200) {
+                            return response.text();
+                          } else {
+                            setErrorText("Wrong email or password");
+                            throw new Error("hey");
+                          }
+                        })
+                        .then(text => {storeUuid(text); navigation.navigate('Login');})
+                        .catch(error => {console.log(errorText)})
+            }}
+        />
+        <Button
+          title={"Register"}
+          onPress={() => {navigation.navigate("Register")}}
+        />
+
+        {/* <TouchableOpacity
           style={styles.submitContainer}
           onPress={() => {
             fetch('http://127.0.0.1:5000/login',
@@ -230,7 +260,7 @@ function SignInScreen({ navigation }) {
           onPress={() => {navigation.navigate("Register")}}
         >
           <Text>Register</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <Text>{errorText}</Text>
       </View>
