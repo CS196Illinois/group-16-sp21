@@ -165,10 +165,7 @@ function SignInScreen({ navigation }) {
 
     <KeyboardAvoidingView behavior="padding">
       
-      <View>
-        <View style={styles.topBar}></View>
-      </View>
-
+      
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
@@ -225,42 +222,6 @@ function SignInScreen({ navigation }) {
           title={"Register"}
           onPress={() => {navigation.navigate("Register")}}
         />
-
-        {/* <TouchableOpacity
-          style={styles.submitContainer}
-          onPress={() => {
-            fetch('http://127.0.0.1:5000/login',
-                            {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    email: email,
-                                    password: password
-                                }),
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                            }
-                        )
-                        .then(response => {
-                          if (response.status == 200) {
-                            return response.text();
-                          } else {
-                            setErrorText("Wrong email or password");
-                            throw new Error("hey");
-                          }
-                        })
-                        .then(text => {storeUuid(text); navigation.navigate('Login');})
-                        .catch(error => {console.log(errorText)})
-            }}
-        >
-          <Text>Log In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.submitContainer}
-          onPress={() => {navigation.navigate("Register")}}
-        >
-          <Text>Register</Text>
-        </TouchableOpacity> */}
 
         <Text>{errorText}</Text>
       </View>
@@ -483,7 +444,11 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     flexGrow: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 220,
+    width: "100%",
+    backgroundColor: "#212729"
+
   },
 
   logo: {
