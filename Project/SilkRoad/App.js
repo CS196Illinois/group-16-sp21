@@ -19,7 +19,7 @@ function Main() {
       <Stack.Screen name="Borrow" component={BorrowScreen} />
       <Stack.Screen name="Lend" component={LendScreen} />
       <Stack.Screen name="Mail" component = {MailScreen} />
-      <Stack.Screen name='AddItem' component = {AddItemScreen} />
+      <Stack.Screen name='AddItem' component = {AddItemScreen}  />
     </Stack.Navigator>
   );
 }
@@ -47,6 +47,7 @@ export default function App() {
         <NavigationContainer onStateChange = {() => {setEffect(true)}}>
           <Drawer.Navigator>
             <Drawer.Screen name="Home" component={Main}/>
+            <Drawer.Screen name="Activity" component={MailScreen}/>
             <Drawer.Screen name="Log out" component={SignInScreen} styles={{color:"#FF0000"}}/>
           </Drawer.Navigator>
         </NavigationContainer>

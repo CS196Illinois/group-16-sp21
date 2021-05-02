@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, TouchableOpacity, Text, Alert, ScrollView, SafeAreaView, TextInput, Image } from "react-native";
+import { View, Button, StyleSheet, TouchableOpacity, Text, Alert, ScrollView, SafeAreaView, TextInput, Image, KeyboardAvoidingView } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from './Search';
@@ -34,7 +34,7 @@ function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.bigButton, styles.lendingColor}
-          onPress={() => navigation.navigate('Borrow')}
+          onPress={() => navigation.navigate('Lend')}
          
         >
           <Text style={styles.bigButtonText}>I want to Lend</Text>
@@ -59,12 +59,10 @@ function BorrowScreen({ navigation }) {
                   style={{width: 50, height: 50}}/>
       </TouchableOpacity>
       <View>
-        <Text>This is the Borrow Screen</Text>
-        <View style={styles.topBar}></View>
-          <View style = {styles.topElements}>
-            <Button title="Mail" onPress={() => navigation.push('Mail')} />
-            <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "borrow"})} />
-          </View>
+    
+      <View style={styles.topBar}></View>
+
+      <Text>Here's what people are offering:</Text>
         
       </View>
       <Searchbar
@@ -75,14 +73,20 @@ function BorrowScreen({ navigation }) {
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type={"borrow"} query={query}/>
+          <ItemList trade_type={"lend"} query={query}/>
         </View>
-
       </ScrollView>
 
       <View style={styles.bottomButtons}>
-        <Button title="Borrow" style={styles.borrowButton} onPress={() => navigation.push('Borrow')} />
-        <Button title="Lend" style={styles.lendButton} onPress={() => navigation.push('Lend')} />
+        <TouchableOpacity onPress={() => navigation.push('Borrow')}>
+          <Text style = {styles.borrowButton}>Borrow</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
+          <Text style = {styles.addItemButton}>{"Send request"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push('Lend')}>
+          <Text style = {styles.lendButton}>Lend</Text>
+        </TouchableOpacity>
       </View>
       
     </View>
@@ -101,13 +105,10 @@ function LendScreen({ navigation }) {
           <Image source={require("./../assets/drawer.png")}
                   style={{width: 50, height: 50}}/>
       </TouchableOpacity>
-      <Text>This is the Lend Screen</Text>
       <View style={[styles.topBar, styles.lendingColor]}></View>
-      <View style = {styles.topElements}>
-        <Button title="Mail" onPress={() => navigation.push('Mail')} />
-        <Button title="AddItem" onPress={() => navigation.push('AddItem', {trade_type: "lend"})} />
-      </View>
-      
+
+      <Text>Here's what people are looking for:</Text>
+
       <Searchbar
         placeholder="Search for Item"
         onChangeText={setQuery}
@@ -116,13 +117,20 @@ function LendScreen({ navigation }) {
 
       <ScrollView>
         <View style={styles.itemScroll}>
-          <ItemList trade_type={"lend"} query={query}/>
+          <ItemList trade_type={"borrow"} query={query}/>
         </View>
       </ScrollView>
 
       <View style={styles.bottomButtons}>
-        <Button title="Borrow" style={styles.borrowButton} onPress={() => navigation.push('Borrow')} />
-        <Button title="Lend" style={styles.lendButton} onPress={() => navigation.push('Lend')} />
+        <TouchableOpacity onPress={() => navigation.push('Borrow')}>
+          <Text style = {styles.borrowButton}>Borrow</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push('AddItem', {trade_type: "borrow"})}>
+          <Text style = {styles.addItemButton}>{"Send request"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push('Lend')}>
+          <Text style = {styles.lendButton}>Lend</Text>
+        </TouchableOpacity>
       </View>
       
     </View>
@@ -154,7 +162,6 @@ function AddItemScreen({ navigation, route }) {
   )
 }
 
-
 function SignInScreen({ navigation }) {
 
   const [email, setEmail] = useState('');
@@ -166,56 +173,91 @@ function SignInScreen({ navigation }) {
   }, [])
 
   return (
-    <View>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Sign in" onPress={() => {
 
-        fetch('http://127.0.0.1:5000/login',
-                        {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                email: email,
-                                password: password
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                        }
-                    )
-                    .then(response => {
-                      if (response.status == 200) {
-                        return response.text();
-                      } else {
-                        setErrorText("Wrong email or password");
-                        throw new Error("hey");
-                      }
-                    })
-                    .then(text => {storeUuid(text); navigation.navigate('Login');})
-                    .catch(error => {console.log(errorText)})
-        }} />
+    <KeyboardAvoidingView behavior="padding">
+      
+      <View>
+        <View style={styles.topBar}></View>
+      </View>
+
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          // source={require('/assets/SilkRoadDark.png')}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Enter email"
+          placeholderTextColor="rgba(180,180,180,1)"
+          returnKeyType="next"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          />
+        <TextInput
+          placeholder="Enter password"
+          secureTextEntry
+          placeholderTextColor="rgba(180,180,180,1)"
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          style={styles.submitContainer}
+          onPress={() => {
+            fetch('http://127.0.0.1:5000/login',
+                            {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    email: email,
+                                    password: password
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                        )
+                        .then(response => {
+                          if (response.status == 200) {
+                            return response.text();
+                          } else {
+                            setErrorText("Wrong email or password");
+                            throw new Error("hey");
+                          }
+                        })
+                        .then(text => {storeUuid(text); navigation.navigate('Login');})
+                        .catch(error => {console.log(errorText)})
+            }}
+        >
+          <Text>Log In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.submitContainer}
+          onPress={() => {navigation.navigate("Register")}}
+        >
+          <Text>Register</Text>
+        </TouchableOpacity>
+
         <Text>{errorText}</Text>
-        <Button title="Register" onPress={() => {navigation.navigate("Register")}}/>
-        <Button title="SKIP THIS" onPress={() => {
+      </View>
+      
+
+      <Button title="SKIP THIS" onPress={() => {
           storeUuid("hi!");
           navigation.navigate('Login');
         }} />
-        <Text>{errorText}</Text>
-    </View>
 
+    </KeyboardAvoidingView>
   );
 }
 
 function RegistrationScreen({ navigation }) {
+
+  <View>
+      <View style={styles.topBar}></View>
+  </View>
 
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -235,41 +277,53 @@ function RegistrationScreen({ navigation }) {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        placeholderTextColor="rgba(180,180,180,1)"
+        style={styles.input}
       />
       <TextInput
         placeholder="First Name"
         value={firstName}
         onChangeText={setFirstName}
+        placeholderTextColor="rgba(180,180,180,1)"
+        style={styles.input}
       />
       <TextInput
         placeholder="Second Name"
         value={secondName}
-        onChangeText={setSecondName}
+        onChangeText={setSecondName}placeholderTextColor="rgba(180,180,180,1)"
+        style={styles.input}
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        placeholderTextColor="rgba(180,180,180,1)"
+        style={styles.input}
       />
-      <Button title="Register" onPress={() => {
-        fetch('http://127.0.0.1:5000/register',
-                        {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                email: email,
-                                firstName: firstName,
-                                secondName: secondName,
-                                password: password
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                        }
-                    ).then(response => {console.log(response)})
+      <TouchableOpacity
+        style={styles.submitContainer}
+        onPress={() => {
+          fetch('http://127.0.0.1:5000/register',
+                          {
+                              method: 'POST',
+                              body: JSON.stringify({
+                                  email: email,
+                                  firstName: firstName,
+                                  secondName: secondName,
+                                  password: password
+                              }),
+                              headers: {
+                                  'Content-Type': 'application/json'
+                              },
+                          }
+                      ).then(response => {console.log(response)})
 
-        navigation.navigate('Login');
-        }} />
+          navigation.navigate('Login');
+          }}
+      >
+        <Text>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -337,6 +391,7 @@ const styles = StyleSheet.create({
   bottomButtons: {
     display: 'flex',
     position: 'sticky',
+    alignItems: 'center',
     bottom: '0',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -345,6 +400,12 @@ const styles = StyleSheet.create({
   },
 
   borrowButton: {
+    width: '100%',
+    backgroundColor: 'blue',
+    border: '1px solid black',
+  },
+
+  addItemButton: {
     width: '100%',
     backgroundColor: 'blue',
     border: '1px solid black',
@@ -403,5 +464,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 
+  logoContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center'
+  },
+
+  logo: {
+    width: 335,
+    height: 220
+  },
+
+  input: {
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,1)',
+    marginBottom: 20,
+    paddingHorizontal: 10
+  },
+
+  inputContainer: {
+    padding: 20
+  },
+
+  submitContainer: {
+      textAlign: 'center'
+    }
 
 });

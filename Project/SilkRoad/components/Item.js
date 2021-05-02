@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, Button } from 'react-native';
 
 // Uses props 'trade_type' (str) and 'n' (int)
 // n refers to item_id
@@ -7,6 +7,11 @@ import { StyleSheet, View, Image, Text } from 'react-native';
 const Item = (props) => {
   
   const [summary, setSummary] = useState([]);
+  const [name, setName] = useState("Loading...");
+  const [finalDate, setFinalDate] = useState("Loading...");
+  const [category, setCategory] = useState("Loading...");
+  const [userFirstName, setUserFirstName] = useState("Loading...");
+  const [userUUID, setUserUUID] = useState("UUID UNKNOWN");
   const [image, setImage] = useState(null);
   
   // Retrieve image and then other details from database
@@ -20,7 +25,11 @@ const Item = (props) => {
     fetch('http://127.0.0.1:5000/item/' + props.trade_type + "/" + props.n)
     .then((response => response.json()))
     .then(data => {
-      setSummary(data)
+      setName(data[0]);
+      setFinalDate(data[1]);
+      setCategory(data[2]);
+      setUserFirstName(data[3]);
+      setUserUUID(data[4]);
     })
 
   }, []);
@@ -34,10 +43,15 @@ return (
           uri: image,
         }}
       />
-      <Text>{summary[0]}</Text>
-      <Text>Final date: {summary[1]}</Text>
-      <Text>Category: {summary[2]}</Text>
-      <Text>{props.trade_type == "lend" ? <Text>Lender</Text> : <Text>Request by</Text>}: {summary[3]}</Text>
+      <Text>{name}</Text>
+      <Text>Final date: {finalDate}</Text>
+      <Text>Category: {category}</Text>
+      <Text>{props.trade_type == "lend" ? <Text>Lender</Text> : <Text>Request by</Text>}: {userFirstName}</Text>
+
+      <Button
+        title = {props.trade_type == "lend" ? "Send request" : "Send offer"}
+      ></Button>
+
     </View>
   );
 }

@@ -199,7 +199,7 @@ def retrieve_item(item_id, trade_type):
     if request.method == 'GET':
         cursor = mysql.connection.cursor()
         cursor.execute("""
-            SELECT catalogue.item_name, DATE_FORMAT(catalogue.end_date, '%%m/%%d/%%Y') AS formatted_date, categories.category_name, users.first_name
+            SELECT catalogue.item_name, DATE_FORMAT(catalogue.end_date, '%%m/%%d/%%Y') AS formatted_date, categories.category_name, users.first_name, users.uuid
             FROM catalogue
                 INNER JOIN categories ON catalogue.category_id = categories.category_id
                 INNER JOIN users ON catalogue.user_id = users.user_id
