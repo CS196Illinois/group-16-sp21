@@ -47,14 +47,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     itemContainer: {
-        padding: "5px",
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
         borderStyle: 'solid',
-        backgroundColor: '#F8EF9F',
+        backgroundColor: '#C4C4C4',
         textAlign: 'center',
         margin: 5
   }

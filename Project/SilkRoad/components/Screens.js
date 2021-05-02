@@ -73,13 +73,13 @@ function BorrowScreen({ navigation }) {
 
       <View style={styles.bottomButtons}>
         <TouchableOpacity onPress={() => navigation.push('Borrow')}>
-          <Text style = {styles.borrowButton}>Borrow</Text>
+          <Text style = {[styles.borrowButton, styles.bottomButtonText]}>Borrow</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
-          <Text style = {styles.addItemButton}>Post Request</Text>
+          <Text style = {[styles.addItemButton, styles.bottomButtonText]}>Post offer</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
-          <Text style = {styles.lendButton}>Lend</Text>
+          <Text style = {[styles.lendButton, styles.bottomButtonText]}>Lend</Text>
         </TouchableOpacity>
       </View>
       
@@ -116,13 +116,13 @@ function LendScreen({ navigation }) {
 
       <View style={styles.bottomButtons}>
         <TouchableOpacity onPress={() => navigation.push('Borrow')}>
-          <Text style = {styles.borrowButton}>Borrow</Text>
+          <Text style = {[styles.borrowButton, styles.bottomButtonText]}>Borrow</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
-          <Text style = {styles.addItemButton}>Post offer</Text>
+          <Text style = {[styles.addItemButton, styles.bottomButtonText]}>Post offer</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push('Lend')}>
-          <Text style = {styles.lendButton}>Lend</Text>
+          <Text style = {[styles.lendButton, styles.bottomButtonText]}>Lend</Text>
         </TouchableOpacity>
       </View>
       
@@ -379,25 +379,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
 
+  bottomButtonText: {
+    fontSize: 18,
+    textShadowRadius: 10,
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowColor: "#878787",
   },
 
   borrowButton: {
     padding: "5px",
     backgroundColor: '#D2E7FF',
     border: '1px solid black',
+    borderTopRightRadius: 10,
   },
 
   addItemButton: {
     padding: "5px",
     backgroundColor: '#9AC9FF',
     border: '1px solid black',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
 
   lendButton: {
     padding: "5px",
     backgroundColor: '#FFEFD7',
-    border: '1px solid green',
+    border: '1px solid black',
+    borderTopLeftRadius: 10
   },
 
   itemScroll: {

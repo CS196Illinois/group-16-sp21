@@ -77,7 +77,9 @@ const styles = StyleSheet.create({
     },
     text: {
       fontFamily: "Verdana",
-      paddingTop: 2.5,
-      paddingBottom: 2.5
+      textShadowRadius: 2,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowColor: "#878787",
+      padding: 5
     }
 });
