@@ -190,39 +190,41 @@ function SignInScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
         />
-
-        <Button
-          title = "Log In"
-          onPress={() => {
-            fetch('http://127.0.0.1:5000/login',
-                            {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    email: email,
-                                    password: password
-                                }),
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
+        <View style={styles.loginButtons}>
+          <Button
+            title = "Log In"
+            onPress={() => {
+              fetch('http://127.0.0.1:5000/login',
+                              {
+                                  method: 'POST',
+                                  body: JSON.stringify({
+                                      email: email,
+                                      password: password
+                                  }),
+                                  headers: {
+                                      'Content-Type': 'application/json'
+                                  },
+                              }
+                          )
+                          .then(response => {
+                            if (response.status == 200) {
+                              return response.text();
+                            } else {
+                              setErrorText("Wrong email or password");
+                              throw new Error("hey");
                             }
-                        )
-                        .then(response => {
-                          if (response.status == 200) {
-                            return response.text();
-                          } else {
-                            setErrorText("Wrong email or password");
-                            throw new Error("hey");
-                          }
-                        })
-                        .then(text => {storeUuid(text); navigation.navigate('Login');})
-                        .catch(error => {console.log(errorText)})
-            }}
-        />
-        <Button
-          title={"Register"}
-          onPress={() => {navigation.navigate("Register")}}
-        />
-
+                          })
+                          .then(text => {storeUuid(text); navigation.navigate('Login');})
+                          .catch(error => {console.log(errorText)})
+              }}
+          />
+        </View>
+        <View  style={styles.loginButtons}>
+          <Button
+            title={"Register"}
+            onPress={() => {navigation.navigate("Register")}}
+          />
+        </View>
         <Text>{errorText}</Text>
       </View>
       
@@ -454,6 +456,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 335,
     height: 220
+  },
+
+  loginButtons: {
+    padding: 5
   },
 
   input: {
