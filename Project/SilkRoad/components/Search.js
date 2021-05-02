@@ -1,6 +1,6 @@
 import React from 'react';
 import { Searchbar } from 'react-native-paper';
-import { useEffect } from 'react/cjs/react.development';
+import { StyleSheet } from 'react-native';
 
 const Search = (props) => {
 
@@ -11,14 +11,13 @@ const Search = (props) => {
     }
 
     return(
-        <div>
-            {/* <p>You are searching for: {searchQuery} </p> */}
+        <View style={{padding: "3px"}}>
             <Searchbar
                 placeholder="Search for Item"
                 onChangeText={onChangeQuery}
                 value={searchQuery}
             />
-        </div>
+        </View>
 
     );
 

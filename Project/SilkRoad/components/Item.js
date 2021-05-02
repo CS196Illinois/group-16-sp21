@@ -36,17 +36,23 @@ const Item = (props) => {
 
   // Return one item's image and other data
 return (
-    <View style={styles.itemContainer}>
-       <Image
-        style={styles.image}
-        source={{
-          uri: image,
-        }}
-      />
-      <Text>{name}</Text>
-      <Text>Final date: {finalDate}</Text>
-      <Text>Category: {category}</Text>
-      <Text>{props.trade_type == "lend" ? <Text>Lender</Text> : <Text>Request by</Text>}: {userFirstName}</Text>
+    <View>
+
+      <View style={styles.imageWrap}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: image,
+          }}
+        />
+      </View>
+
+      <View>
+        <Text style={styles.text, {fontSize: 17}}>{userFirstName}</Text>
+        <Text style={[styles.text, {fontWeight: "bold"}]}>{name}</Text>
+        <Text style={styles.text}>{category}</Text>
+        <Text style={styles.text}>Final date: {finalDate}</Text>
+      </View>
 
       <Button
         title = {props.trade_type == "lend" ? "Send request" : "Send offer"}
@@ -62,19 +68,16 @@ export default Item;
 const styles = StyleSheet.create({
     // Width and height of image must be written here for it to be shown
     image: {
-        width: 150,
-        height: 150,
+        width: "100%",
+        height: 150
     },
-    itemContainer: {
-        display: 'flex',
-        
-        padding: '10px',
-        alignItems: 'center',
-        flex: 1,
-        height: '250px',
-        width: '250px',
-        borderWidth: 1,
-        borderStyle: 'solid',
-        backgroundColor: '#F8EF9F'
-  }
+    imageWrap: {
+      display: "flex",
+      width: "100%"
+    },
+    text: {
+      fontFamily: "Verdana",
+      paddingTop: 2.5,
+      paddingBottom: 2.5
+    }
 });

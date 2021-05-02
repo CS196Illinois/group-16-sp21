@@ -57,11 +57,13 @@ function BorrowScreen({ navigation }) {
 
       <Text>Here's what people are offering:</Text>
         
-      <Searchbar
-        placeholder="Search for Item"
-        onChangeText={setQuery}
-        value={query}
-      />
+      <View style={styles.search}>
+        <Searchbar
+          placeholder="Search for Item"
+          onChangeText={setQuery}
+          value={query}
+        />
+      </View>
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -98,11 +100,13 @@ function LendScreen({ navigation }) {
 
       <Text>Here's what people are looking for:</Text>
 
-      <Searchbar
-        placeholder="Search for Item"
-        onChangeText={setQuery}
-        value={query}
-      />
+      <View style={styles.search}>
+        <Searchbar
+          placeholder="Search for Item"
+          onChangeText={setQuery}
+          value={query}
+        />
+      </View>
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -474,7 +478,10 @@ const styles = StyleSheet.create({
   },
 
   submitContainer: {
-      textAlign: 'center'
-    }
-
+    textAlign: 'center'
+  },
+  
+  search: {
+    padding: "10px"
+  }
 });
