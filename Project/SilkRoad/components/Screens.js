@@ -55,7 +55,7 @@ function BorrowScreen({ navigation }) {
     
       <TopBar type={"borrow"}/>
 
-      <Text>Here's what people are offering:</Text>
+      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5}}>Here's what people are offering:</Text>
         
       <View style={styles.search}>
         <Searchbar
@@ -98,7 +98,7 @@ function LendScreen({ navigation }) {
       
       <TopBar type={"lend"}/>
 
-      <Text>Here's what people are looking for:</Text>
+      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5}}>Here's what people are looking for:</Text>
 
       <View style={styles.search}>
         <Searchbar
