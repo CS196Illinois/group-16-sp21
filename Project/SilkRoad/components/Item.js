@@ -50,7 +50,8 @@ return (
 
       <Button
         title = {props.trade_type == "lend" ? "Send request" : "Send offer"}
-      ></Button>
+        onPress = {() => {console.log(userUUID);}}
+      />
 
     </View>
   );

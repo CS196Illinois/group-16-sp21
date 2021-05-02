@@ -24,6 +24,14 @@ function Main() {
   );
 }
 
+function Activity() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Mail" component = {MailScreen} />
+    </Stack.Navigator>
+  )
+}
+
 export default function App() {
   const [uuid, setUuid] = useState(null);
   const [effect, setEffect] = useState(true);
@@ -47,7 +55,7 @@ export default function App() {
         <NavigationContainer onStateChange = {() => {setEffect(true)}}>
           <Drawer.Navigator>
             <Drawer.Screen name="Home" component={Main}/>
-            <Drawer.Screen name="Activity" component={MailScreen}/>
+            <Drawer.Screen name="Activity" component={Activity}/>
             <Drawer.Screen name="Log out" component={SignInScreen} styles={{color:"#FF0000"}}/>
           </Drawer.Navigator>
         </NavigationContainer>
