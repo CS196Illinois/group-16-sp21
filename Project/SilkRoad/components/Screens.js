@@ -56,7 +56,7 @@ function BorrowScreen({ navigation }) {
     
       <TopBar type={"borrow"}/>
 
-      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5}}>Here's what people are offering:</Text>
+      
         
       <View style={styles.search}>
         <Searchbar
@@ -65,6 +65,8 @@ function BorrowScreen({ navigation }) {
           value={query}
         />
       </View>
+
+      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are offering:</Text>
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -99,7 +101,6 @@ function LendScreen({ navigation }) {
       
       <TopBar type={"lend"}/>
 
-      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5}}>Here's what people are looking for:</Text>
 
       <View style={styles.search}>
         <Searchbar
@@ -108,6 +109,9 @@ function LendScreen({ navigation }) {
           value={query}
         />
       </View>
+
+      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are looking for:</Text>
+
 
       <ScrollView>
         <View style={styles.itemScroll}>
@@ -400,6 +404,7 @@ const styles = StyleSheet.create({
 
   borrowButton: {
     padding: "5px",
+    flex: 2,
     backgroundColor: '#D2E7FF',
     border: '1px solid black',
     borderTopRightRadius: 10,
@@ -408,6 +413,7 @@ const styles = StyleSheet.create({
   addItemButton: {
     padding: "5px",
     backgroundColor: '#9AC9FF',
+    flex: 1,
     border: '1px solid black',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10
@@ -415,6 +421,7 @@ const styles = StyleSheet.create({
 
   lendButton: {
     padding: "5px",
+    flex: 2,
     backgroundColor: '#FFEFD7',
     border: '1px solid black',
     borderTopLeftRadius: 10
@@ -447,7 +454,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-   
     justifyContent: 'space-around',
     margin: '5%',
     textAlign: 'center',
