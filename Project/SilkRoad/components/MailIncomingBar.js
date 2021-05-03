@@ -66,14 +66,14 @@ const MailIncomingBar = (props) => {
 
             <TouchableOpacity onPress={() => {setUserResponse(1)}}>
             <View>
-                <Text style={styles.buttonReject}>
+                <Text style={styles.buttonAccept}>
                 Accept
                 </Text>
             </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {setUserResponse(0)}}>
             <View>
-                <Text style={styles.buttonAccept}>
+                <Text style={styles.buttonReject}>
                 Reject
                 </Text>
             </View>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     padding: 5,
-    backgroundColor: '#D2E7FF'
+    backgroundColor: '#FF6962'
   },
    buttonAccept: {
     display: 'flex',
@@ -152,6 +152,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     padding: 5,
-    backgroundColor: '#FFEFD7'
+    backgroundColor: '#77DD76'
   }
 });

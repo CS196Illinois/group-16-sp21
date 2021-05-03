@@ -99,21 +99,25 @@ function LendScreen({ navigation }) {
 
     <View style={styles.container}>
       
-      <TopBar type={"lend"}/>
+      
 
 
-      <View style={styles.search}>
-        <Searchbar
-          placeholder="Search for Item"
-          onChangeText={setQuery}
-          value={query}
-        />
-      </View>
+      <ScrollView
+        stickyHeaderIndices={[0]}
+      >
 
-      <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are looking for:</Text>
+        <TopBar type={"lend"}/>
 
+        <View style={styles.search}>
+          <Searchbar
+            placeholder="Search for Item"
+            onChangeText={setQuery}
+            value={query}
+          />
+        </View>
 
-      <ScrollView>
+        <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are looking for:</Text>
+
         <View style={styles.itemScroll}>
           <ItemList trade_type={"borrow"} query={query}/>
         </View>

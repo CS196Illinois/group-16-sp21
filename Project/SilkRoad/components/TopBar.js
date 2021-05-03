@@ -51,11 +51,11 @@ export default withNavigation(TopBar);
 
 const styles = StyleSheet.create({
     topBar: {
-    display: 'flex',
-    height: 100,
-    width: '100%',
-    backgroundColor: '#9AC9FF',
-    flexDirection: 'row',
+      display: 'flex',
+      height: 100,
+      width: '100%',
+      backgroundColor: '#9AC9FF',
+      flexDirection: 'row',
   },
 
   barContent: {
