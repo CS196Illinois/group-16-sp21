@@ -75,14 +75,14 @@ function BorrowScreen({ navigation }) {
       </ScrollView>
 
       <View style={styles.bottomButtons}>
-        <TouchableOpacity onPress={() => navigation.push('Borrow')}>
-          <Text style = {[styles.borrowButton, styles.bottomButtonText]}>Borrow</Text>
+        <TouchableOpacity style={styles.borrowButton} onPress={() => navigation.push('Borrow')}>
+          <Text style={styles.bottomButtonText}>Borrow</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
-          <Text style = {[styles.addItemButton, styles.bottomButtonText]}>Post offer</Text>
+        <TouchableOpacity style={styles.addItemButton} onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
+          <Text style={styles.bottomButtonText}>Post offer</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('Lend')}>
-          <Text style = {[styles.lendButton, styles.bottomButtonText]}>Lend</Text>
+        <TouchableOpacity style={styles.lendButton} onPress={() => navigation.push('Lend')}>
+          <Text style={styles.bottomButtonText}>Lend</Text>
         </TouchableOpacity>
       </View>
       
@@ -124,14 +124,14 @@ function LendScreen({ navigation }) {
       </ScrollView>
 
       <View style={styles.bottomButtons}>
-        <TouchableOpacity onPress={() => navigation.push('Borrow')}>
-          <Text style = {[styles.borrowButton, styles.bottomButtonText]}>Borrow</Text>
+        <TouchableOpacity style={styles.borrowButton} onPress={() => navigation.push('Borrow')}>
+          <Text style={styles.bottomButtonText}>Borrow</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
-          <Text style = {[styles.addItemButton, styles.bottomButtonText]}>Post offer</Text>
+        <TouchableOpacity style={styles.addItemButton} onPress={() => navigation.push('Post Item', {trade_type: "borrow"})}>
+          <Text style={styles.bottomButtonText}>Post offer</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('Lend')}>
-          <Text style = {[styles.lendButton, styles.bottomButtonText]}>Lend</Text>
+        <TouchableOpacity style={styles.lendButton} onPress={() => navigation.push('Lend')}>
+          <Text style={styles.bottomButtonText}>Lend</Text>
         </TouchableOpacity>
       </View>
       
@@ -395,12 +395,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: '0',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
   },
 
   bottomButtonText: {
-    fontSize: 18,
+    fontSize: 30,
     textShadowRadius: 10,
     textShadowOffset: { width: 3, height: 3 },
     textShadowColor: "#878787",
@@ -408,27 +406,35 @@ const styles = StyleSheet.create({
 
   borrowButton: {
     padding: "5px",
-    flex: 2,
     backgroundColor: '#D2E7FF',
-    border: '1px solid black',
+    width:"38%",
+    textAlign: 'center',
+    // border: '1px solid black',
     borderTopRightRadius: 10,
+    height: '100%',
   },
 
   addItemButton: {
     padding: "5px",
     backgroundColor: '#9AC9FF',
-    flex: 1,
-    border: '1px solid black',
+    width:"24%",
+    overflow:"auto",
+    textAlign: 'center',
+    
+    // border: '1px solid black',
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10
+    borderTopRightRadius: 10,
+    height: '100%',
   },
 
   lendButton: {
     padding: "5px",
-    flex: 2,
     backgroundColor: '#FFEFD7',
-    border: '1px solid black',
-    borderTopLeftRadius: 10
+    width:"38%",
+    textAlign: 'center',
+    // border: '1px solid black',
+    borderTopLeftRadius: 10,
+    height: '100%',
   },
 
   itemScroll: {
@@ -512,6 +518,6 @@ const styles = StyleSheet.create({
   },
   
   search: {
-    padding: "10px"
+    padding: "10px",
   }
 });
