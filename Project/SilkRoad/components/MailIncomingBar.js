@@ -65,15 +65,15 @@ const MailIncomingBar = (props) => {
             </View>
 
             <TouchableOpacity onPress={() => {setUserResponse(1)}}>
-            <View style={styles.buttons}>
-                <Text>
+            <View>
+                <Text style={styles.buttonReject}>
                 Accept
                 </Text>
             </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {setUserResponse(0)}}>
-            <View style={styles.buttons}>
-                <Text>
+            <View>
+                <Text style={styles.buttonAccept}>
                 Reject
                 </Text>
             </View>
@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#C4C4C4',
       textAlign: 'center',
-      margin: 5
+      margin: 5,
+      width: "50vw"
   },
   buttonContainer: {
     display: 'flex',
@@ -127,10 +128,30 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     padding: 3
   },
-  buttons: {
+  buttonReject: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    margin:5
+    margin:5,
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    padding: 5,
+    backgroundColor: '#D2E7FF'
+  },
+   buttonAccept: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin:5,
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    padding: 5,
+    backgroundColor: '#FFEFD7'
   }
 });

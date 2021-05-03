@@ -14,6 +14,8 @@ const Item = (props) => {
   const [userId, setUserId] = useState("ID UNKNOWN");
   const [userUuid, setUserUuid] = useState(null);
   const [image, setImage] = useState(null);
+  const [buttonText, setButtonText] = useState("Loading...");
+  const [disabled, setDisabled] = useState(false);
   
   // Retrieve image and then other details from database
   useEffect( () => {
@@ -35,6 +37,7 @@ const Item = (props) => {
       setCategory(data[2]);
       setUserFirstName(data[3]);
       setUserId(data[4]);
+      setButtonText(props.trade_type == "lend" ? "Send request" : "Send offer");
     })
 
   }, []);
@@ -54,7 +57,7 @@ return (
 
       <View style={styles.textContainer}>
         <Text style={styles.text, {fontSize: 17}}>{userFirstName}</Text>
-        <View style={{display: 'flex', maxWidth: "48vw", flexDirection: 'row', justifyContent: 'center', minHeight: "50px"}}>
+        <View style={{maxWidth: "100%"}}>
             <Text style={[styles.text, {fontWeight: "bold", flex: 1}]}>{name}</Text>
         </View>
         
@@ -63,7 +66,8 @@ return (
       </View>
 
       <Button
-        title = {props.trade_type == "lend" ? "Send request" : "Send offer"}
+        title = {buttonText}
+        disabled = {disabled}
         onPress = {() => {
           fetch('http://127.0.0.1:5000/mail/item/post',
               {
@@ -77,7 +81,11 @@ return (
                       'Content-Type': 'application/json'
                   },
               }
-          ).then(response => {console.log(response)})
+          ).then(response => {
+            console.log(response)
+            setButtonText("Sent!");
+            setDisabled(true);
+          })
         }}
       />
 

@@ -248,7 +248,7 @@ function SignInScreen({ navigation }) {
       
 
       <Button title="SKIP THIS" onPress={() => {
-          storeUuid("hi!");
+          storeUuid("18715ca3-dab8-494b-8583-b94c57cd10e7");
           navigation.navigate('Login');
         }} />
 

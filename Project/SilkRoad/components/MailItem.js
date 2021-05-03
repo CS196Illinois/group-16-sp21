@@ -47,7 +47,9 @@ return (
       </View>
 
       <View>
-        <Text style={[styles.text, {fontWeight: "bold"}]}>{name}</Text>
+        <View style={{maxWidth: "100%"}}>
+            <Text style={[styles.text, {fontWeight: "bold", flex: 1, height: "10vw"}]}>{name}</Text>
+        </View>
         <Text style={styles.text}>{category}</Text>
         <Text style={styles.text}>Respond by: {finalDate}</Text>
       </View>

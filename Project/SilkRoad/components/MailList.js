@@ -19,7 +19,7 @@ const MailList = (props) => {
 
   if (props.mail_type == "incoming") {
     return(
-      <View style={styles.incomingList}>
+      <View style={styles.incomingList, styles.itemContainer}>
         {items.map(i => {
             return (
               <MailIncomingBar
@@ -31,7 +31,7 @@ const MailList = (props) => {
     );
   } else if (props.mail_type == "outgoing") {
     return (
-      <View style={styles.incomingList}>
+      <View style={styles.incomingList, styles.itemContainer}>
         {items.map(i => {
             return (
               <MailOutgoingBar
@@ -54,5 +54,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexWrap: "wrap",
     width: "100%"
+    
+  },
+  itemContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        backgroundColor: '#C4C4C4',
+        textAlign: 'center',
+        marginTop: 5,
+        
   }
 });
