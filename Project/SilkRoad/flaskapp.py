@@ -130,6 +130,116 @@ def add_item():
         return "ok", 200
 
 
+@ app.route('/mail/item/count/<mail_type>/<uuid>')
+def retrieve_mail_count(mail_type, uuid):
+    cursor = mysql.connection.cursor()
+
+    cursor.execute("SELECT user_id FROM users WHERE uuid = %s", (uuid,))
+    user_id = cursor.fetchall()[0][0]
+
+    if mail_type == 'incoming':
+        cursor.execute("""
+            SELECT
+                item_id
+            FROM
+                message
+            WHERE
+                recipient = %s
+        """, (user_id,))
+        db = cursor.fetchall()
+        cursor.close()
+        return jsonify(db)
+
+    elif mail_type == 'outgoing':
+        cursor.execute("""
+            SELECT
+                item_id
+            FROM
+                message
+            WHERE
+                sender = %s
+        """, (user_id,))
+        db = cursor.fetchall()
+        cursor.close()
+        return jsonify(db)
+
+
+@ app.route('/mail/response/<mail_type>/<item_id>', methods=['GET', 'POST'])
+def retrieve_response(mail_type, item_id):
+    if request.method == 'GET':
+
+        cursor = mysql.connection.cursor()
+
+        if mail_type == "incoming":
+            cursor.execute(
+                """
+            SELECT
+                response, sender, recipient, catalogue.trade_type, users.first_name
+            FROM
+                message
+                INNER JOIN catalogue ON catalogue.item_id = %s
+                INNER JOIN users ON users.user_id = sender
+            WHERE
+                message.item_id = %s;
+            """, (item_id, item_id))
+        elif mail_type == "outgoing":
+            cursor.execute(
+                """
+            SELECT
+                response, sender, recipient, catalogue.trade_type, users.first_name
+            FROM
+                message
+                INNER JOIN catalogue ON catalogue.item_id = %s
+                INNER JOIN users ON users.user_id = recipient
+            WHERE
+                message.item_id = %s;
+            """, (item_id, item_id))
+
+        db = cursor.fetchall()[0]
+        print(db)
+        cursor.close()
+        return (jsonify(db))
+    elif request.method == 'POST':
+        response = request.json['response']
+
+        if response == 1:
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                "UPDATE message SET response = TRUE WHERE item_id = %s", (item_id,))
+            mysql.connection.commit()
+            cursor.close()
+        elif response == 0:
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                "UPDATE message SET response = FALSE WHERE item_id = %s", (item_id,))
+            mysql.connection.commit()
+            cursor.close()
+        return ("OK", 200)
+
+
+@ app.route('/mail/item/post', methods=['POST'])
+def send_mail():
+    response = request.json
+    item_id = response['item_id']
+    recipient_id = response['recipient_id']
+    sender_uuid = response['sender_uuid'].replace('"', '')
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT user_id FROM users WHERE uuid = %s", (sender_uuid,))
+    sender_id = cursor.fetchall()[0][0]
+
+    cursor.execute("""
+        INSERT INTO
+            message (item_id, sender, recipient)
+        VALUES (%s, %s, %s)
+    """, (item_id, sender_id, recipient_id))
+
+    mysql.connection.commit()
+    cursor.close()
+
+    return "OK", 200
+
+
 @ app.route('/item/count/<path>/<query>', methods=['GET'])
 def retrieve_count_query(path, query):
 
@@ -181,12 +291,12 @@ def retrieve_count(path):
         return jsonify(db)
 
 
-@ app.route('/item/image/<trade_type>/<item_id>', methods=['GET'])
-def retrieve_image(item_id, trade_type):
+@ app.route('/item/image/<item_id>', methods=['GET'])
+def retrieve_image(item_id):
     if request.method == 'GET':
         cursor = mysql.connection.cursor()
         cursor.execute(
-            "SELECT image FROM catalogue WHERE (item_id = %s) AND (trade_type = %s)", (item_id, trade_type))
+            "SELECT image FROM catalogue WHERE (item_id = %s)", (item_id,))
         db = cursor.fetchall()
         cursor.close()
         return (
@@ -194,18 +304,17 @@ def retrieve_image(item_id, trade_type):
         )
 
 
-@ app.route('/item/<trade_type>/<item_id>', methods=['GET'])
-def retrieve_item(item_id, trade_type):
+@ app.route('/item/<item_id>', methods=['GET'])
+def retrieve_item(item_id,):
     if request.method == 'GET':
         cursor = mysql.connection.cursor()
         cursor.execute("""
-            SELECT catalogue.item_name, DATE_FORMAT(catalogue.end_date, '%%m/%%d/%%Y') AS formatted_date, categories.category_name, users.first_name, users.uuid
+            SELECT catalogue.item_name, DATE_FORMAT(catalogue.end_date, '%%m/%%d/%%Y') AS formatted_date, categories.category_name, users.first_name, users.user_id
             FROM catalogue
                 INNER JOIN categories ON catalogue.category_id = categories.category_id
                 INNER JOIN users ON catalogue.user_id = users.user_id
             WHERE catalogue.item_id = %s
-            AND catalogue.trade_type = %s
-        """, (item_id, trade_type))
+        """, (item_id,))
         db = cursor.fetchall()
 
     return (

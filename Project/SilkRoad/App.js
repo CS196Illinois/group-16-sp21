@@ -1,3 +1,6 @@
+// When you're ready.
+// I am.
+
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { View, StyleSheet } from "react-native";

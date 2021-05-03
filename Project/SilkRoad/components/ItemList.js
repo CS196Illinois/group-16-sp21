@@ -28,7 +28,6 @@ export default function ItemList(props) {
                     <View style={styles.itemContainer}>
                         <Item
                             n={i}
-                            trade_type = {props.trade_type}
                         />
                     </View>
                 );
@@ -55,6 +54,8 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         backgroundColor: '#C4C4C4',
         textAlign: 'center',
-        margin: 5
+        marginTop: 5,
+        width: "170px",
+        height: "360px"
   }
 });

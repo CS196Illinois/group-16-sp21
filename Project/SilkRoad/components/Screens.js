@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Search from './Search';
 import ItemList from './ItemList';
 import TopBar from './TopBar';
+import MailList from './MailList'
 import { getUuid, storeUuid, logOff } from './functions/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
 import ItemAdd from './ItemAdd';
@@ -132,11 +133,20 @@ function LendScreen({ navigation }) {
 }
 
 function MailScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <TopBar/>
-      <Text> This is the Mail Screen</Text>
+  const [userUuid, setUserUuid] = useState(null);
 
+  useEffect(() => {
+    getUuid()
+    .then(result => {
+      setUserUuid(result.replace(/\"/g, ''));
+    })
+  }, [])
+
+  return (
+    <View style={styles.container} key={userUuid}>
+      <TopBar/>
+      <MailList mail_type={"incoming"} uuid={userUuid}/>
+      <MailList mail_type={"outgoing"} uuid={userUuid}/>
     </View>
   )
 }
