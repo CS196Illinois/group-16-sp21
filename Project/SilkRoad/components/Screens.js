@@ -53,17 +53,16 @@ function BorrowScreen({ navigation }) {
   return (
 
     <View style={styles.container}>
-    
-      <TopBar type={"borrow"}/>
+      <View style={styles.bar}>
+          <TopBar type={"bottom"}/>
 
-      
-        
-      <View style={styles.search}>
-        <Searchbar
-          placeholder="Search for Item"
-          onChangeText={setQuery}
-          value={query}
-        />
+          <View style={styles.search}>
+            <Searchbar
+              placeholder="Search for Item"
+              onChangeText={setQuery}
+              value={query}
+            />
+          </View>
       </View>
 
       <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are offering:</Text>
@@ -98,23 +97,22 @@ function LendScreen({ navigation }) {
   return (
 
     <View style={styles.container}>
-      
-      
 
+      <View style={styles.bar}>
+          <TopBar type={"lend"}/>
+
+          <View style={styles.search}>
+            <Searchbar
+              placeholder="Search for Item"
+              onChangeText={setQuery}
+              value={query}
+            />
+          </View>
+      </View>
 
       <ScrollView
         stickyHeaderIndices={[0]}
       >
-
-        <TopBar type={"lend"}/>
-
-        <View style={styles.search}>
-          <Searchbar
-            placeholder="Search for Item"
-            onChangeText={setQuery}
-            value={query}
-          />
-        </View>
 
         <Text style={{textAlign: "center", fontFamily: "Verdana", paddingTop: 5, fontSize: 18}}>Here's what people are looking for:</Text>
 
@@ -122,6 +120,8 @@ function LendScreen({ navigation }) {
           <ItemList trade_type={"borrow"} query={query}/>
         </View>
       </ScrollView>
+
+      
 
       <View style={styles.bottomButtons}>
         <TouchableOpacity style={styles.borrowButton} onPress={() => navigation.push('Borrow')}>
@@ -398,7 +398,9 @@ const styles = StyleSheet.create({
   },
 
   bottomButtonText: {
-    fontSize: 30,
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     textShadowRadius: 10,
     textShadowOffset: { width: 3, height: 3 },
     textShadowColor: "#878787",
@@ -519,5 +521,11 @@ const styles = StyleSheet.create({
   
   search: {
     padding: "10px",
-  }
+  },
+
+  bar: {
+    display: "flex", 
+    top: 0, 
+    position: "sticky", 
+    zIndex: 100}
 });

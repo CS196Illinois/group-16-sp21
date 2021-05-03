@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-evenly',
       alignItems: 'center',
       width: "100%",
-      backgroundColor: '#C4C4C4',
+      backgroundColor: '#F4F4F4',
       marginTop: 5
   },
   itemContainer: {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#C4C4C4',
+      backgroundColor: '#F4F4F4',
       textAlign: 'center',
       margin: 5,
       width: "50vw"
