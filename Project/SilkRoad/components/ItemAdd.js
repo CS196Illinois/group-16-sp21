@@ -6,6 +6,7 @@ import { getUuid } from './functions/asyncStorage';
 import { StackActions } from '@react-navigation/routers';
 import { createStackNavigator } from '@react-navigation/stack';
 import { withNavigation } from '@react-navigation/compat';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 // Uses prop 'trade_type'
 // TODO: Eject and add an image picker
@@ -34,38 +35,54 @@ const ItemAdd = ( props ) => {
 
     return (
         <View>
-            <TextInput
-                placeholder="Name of item"
-                placeholderTextColor="rgba(180,180,180,1)"
-                returnKeyType="next"
-                value={name}
-                onChangeText={onChangeName}
-                style={styles.input}
-            />
+            <View style={styles.inputContainer}>
+                <TextInput
+                    placeholder="Name of item"
+                    placeholderTextColor="rgba(180,180,180,1)"
+                    returnKeyType="next"
+                    value={name}
+                    onChangeText={onChangeName}
+                    style={styles.input}
+                />
+            </View>
 
+            
+
+            <Text style={{fontSize: 17}}>
+                Select an end date:
+            </Text>
             <CalendarPicker
                 onDateChange={onChangeDate}
             />
+            
+            <View style={{padding: 25}}>
+                <RNPickerSelect
+                placeholder={{
+                    label: "Select a category",
+                    value: "no_category_selected"
+                }}
+                onValueChange={(value) => {
+                    if (value != "no_category_selected") {
+                        setCategory(value);
+                    }
+                }}
+                items={categories.map(i => (
+                    {
+                        label: i[1],
+                        value: i[0]
+                    }))}
+                />
+            </View>
 
-            <Image source={require("./../assets/" + category + ".png")}
-                  style={{width: 50, height: 50}}/>
+            <View style={styles.imageContainer}>
+                <Image
+                    source={require("./../assets/" + category + ".png")}
+                    style={styles.image}
+                />
+            </View>
 
-            <RNPickerSelect
-            placeholder={{
-                label: "Select a category",
-                value: "no_category_selected"
-            }}
-            onValueChange={(value) => {
-                if (value != "no_category_selected") {
-                    setCategory(value);
-                }
-            }}
-            items={categories.map(i => (
-                {
-                    label: i[1],
-                    value: i[0]
-                }))}
-            />
+            
+            
 
             <Button
                 title="Submit"
@@ -100,10 +117,26 @@ const ItemAdd = ( props ) => {
 export default withNavigation(ItemAdd);
 
 const styles = StyleSheet.create({
+    inputContainer: {
+        padding: 25,
+    },
     input: {
         height: 40,
         backgroundColor: 'rgba(255,255,255,1)',
         marginBottom: 20,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        borderWidth: 1
+    },
+    image : {
+        width: "50%",
+        height: "100%"
+    },
+    imageContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        width: "100%",
+        height: "30vh",
+        padding: 15
     }
 });
