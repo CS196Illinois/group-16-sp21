@@ -77,7 +77,7 @@ const MailOutgoingBar = (props) => {
 export default MailOutgoingBar;
 
 const styles = StyleSheet.create({
-  masterBox: {
+   masterBox: {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#C4C4C4',
       textAlign: 'center',
-      margin: 5
+      margin: 5,
+      width: "50vw"
   },
   buttonContainer: {
     display: 'flex',

@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#C4C4C4',
       textAlign: 'center',
-      margin: 5
+      margin: 5,
+      width: "50vw"
   },
   buttonContainer: {
     display: 'flex',
